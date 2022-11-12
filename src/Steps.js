@@ -9,31 +9,31 @@ function GroupExample() {
   return (
     <Container>
       <Row>
-        <Col className="col-8">
-          <CardGroup>
+        <Col className="col-12">
+          <CardGroup style={{ fontSize: "18px" }}>
             <Card
-              style={{ backgroundColor: "#f3f3f3" }}
+              style={{ backgroundColor: "#f3f3f3", marginRight: "20px", borderRadius: "20px", padding: "10px"}}
               className="border border-0"
             >
-              <Card.Img variant="top" src={Image2} style={{ width: "300px" }} />
+              <Card.Img variant="top" src={Image2} style={{ borderRadius: "20px"}}  />
               <Card.Body>
-                <Card.Text>Fill in a simple form, Step by step</Card.Text>
+                <Card.Text>Fill in a simple form, step by step</Card.Text>
               </Card.Body>
             </Card>
             <Card
-              style={{ backgroundColor: "#f3f3f3" }}
+              style={{ backgroundColor: "#f3f3f3", marginRight: "20px", borderRadius: "20px", padding: "10px" }}
               className="border border-0"
             >
-              <Card.Img variant="top" src={Image3} style={{ width: "300px" }} />
+              <Card.Img variant="top" src={Image3} style={{ borderRadius: "20px"}} />
               <Card.Body>
                 <Card.Text>Pay by wire transfer or cryptocurrency</Card.Text>
               </Card.Body>
             </Card>
             <Card
-              style={{ backgroundColor: "#f3f3f3" }}
+              style={{ backgroundColor: "#f3f3f3", borderRadius: "20px", padding: "10px" }}
               className="border border-0"
             >
-              <Card.Img variant="top" src={Image4} style={{ width: "300px" }} />
+              <Card.Img variant="top" src={Image4} style={{ borderRadius: "20px"}} />
 
               <Card.Body>
                 <Card.Text>Receive a confirmed letter of credit</Card.Text>
