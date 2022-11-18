@@ -4,7 +4,8 @@ import Image1 from "./jpg/1.png";
 import {Col, Container, Row} from "react-bootstrap";
 import {faArrowRight, faCircleCheck, faLock, faScaleBalanced} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useEffect, useState} from "react";
+import {useEffect, useState,useContext} from "react";
+import {AppContext} from "./Context";
 
 const ArrowText = {
     "marginLeft": "8px",
@@ -18,6 +19,8 @@ const MainBulletPoints = {
 }
 
 function MainCard() {
+    const {setLayout} = useContext(AppContext);
+
 
     const mediaQuery = "(min-width: 1000px)"
 
@@ -30,22 +33,11 @@ function MainCard() {
 
     let MainCardHeading;
 
-    if (matches) {
-        MainCardHeading = <p style={{"fontSize": "30px", "lineHeight": "1.3em"}}>
-            Pay and get paid faster, easier,
-            and more reliably when you use Payco,
-            the payment platform of the future
-        </p>
-    } else {
-        MainCardHeading = <p style={{"fontSize": "20px", "lineHeight": "1em"}}>
-            Pay and get paid faster, easier,
-            and more reliably when you use Payco,
-            the payment platform of the future
-        </p>
-    }
+    MainCardHeading = <p style={{"fontSize": "30px", "lineHeight": "1.3em"}}>
+        Sell your artistic creations in a marketplace that empowers everyone
+    </p>
 
     return <Container>
-
         <Card
             style={{
                 backgroundColor: "#f3f3f3", padding: "40px",

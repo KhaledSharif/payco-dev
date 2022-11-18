@@ -1,15 +1,24 @@
-
 import './App.css';
 import React from "react";
-import { Route, Switch } from "react-router-dom";
 import Layout from "./Layout";
+import {useState} from "react";
+import {AppContext} from "./Context";
 
 function App() {
-  return (
-    <div className="app-routes">
-          <Layout />
-    </div>
-  );
+
+
+    const [layout, setLayout] = useState("HOME")
+
+    return (
+        <AppContext.Provider value={{
+            layout,
+            setLayout
+        }}>
+            <Layout/>
+        </AppContext.Provider>
+    );
+
+
 }
 
 export default App;

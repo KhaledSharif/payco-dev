@@ -1,9 +1,6 @@
 import { Col, Container, Row, Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
-import Image2 from "./jpg/2.png";
-import Image3 from "./jpg/3.png";
-import Image4 from "./jpg/4.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faUser, faUserTie, faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 import {useContext} from "react";
@@ -35,7 +32,6 @@ const ArrowHeaderStyle = {
   "border": "none",
   "padding": "10px",
   "paddingLeft": "20px",
-  "marginBottom": "10px",
   "width": "100%"
 }
 
@@ -56,12 +52,7 @@ function GroupExample() {
                 <FontAwesomeIcon icon={faUser} style={ArrowHeaderIcon}  /> For Individuals <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
-              <div style={ImageContainer}>
-               <img src={Image2} style={{ width: "100%"}}  />
-              </div>
-              <div style={TextContainer}>
-                Store your money safely in a digital wallet that only you hold the keys to
-              </div>
+
 
             </Card>
             <Card
@@ -72,12 +63,7 @@ function GroupExample() {
                 <FontAwesomeIcon icon={faUserTie} style={ArrowHeaderIcon} /> For Businesses <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
-              <div style={ImageContainer}>
-                <img src={Image3} style={{ width: "100%"}}  />
-              </div>
-              <div style={TextContainer}>
-                Easily accept fiat and crypto currencies, both in-store and online
-              </div>
+
 
             </Card>
             <Card
@@ -88,12 +74,7 @@ function GroupExample() {
                 <FontAwesomeIcon icon={faUserAstronaut} style={ArrowHeaderIcon} /> For Creators <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
-              <div style={ImageContainer}>
-                <img src={Image4} style={{ width: "100%"}}  />
-              </div>
-              <div style={TextContainer}>
-                Sell your artistic creations in a marketplace that empowers everyone
-              </div>
+
 
             </Card>
           </CardGroup>
