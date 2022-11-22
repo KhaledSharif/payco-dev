@@ -4,8 +4,12 @@ import Steps from "./Steps"
 import MainCard from "./MainCard";
 import {AppContext} from "./Context";
 import ServiceInfoCard from "./ServiceInfoCard";
-import StepsAsMenu from "./StepsAsMenu";
+import BusinessInfoCard from "./BusinessInfoCard";
+import {Container, Col,Row} from "react-bootstrap";
+import IndividualInfoCard from "./IndividualInfoCard";
+import EtherscanCard from "./EtherscanCard";
 
+const ContainerStyle = {minWidth:"100vw", display: "flex", "justify-content": "center"};
 
 function Layout() {
 
@@ -14,23 +18,57 @@ function Layout() {
     let layoutInternals;
 
     if (layout === "HOME") {
-        layoutInternals = <div className="container" style={{ marginTop: "25px" }} >
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+            <Row>
             <MainCard/>
+            </Row>
+            <Row>
             <Steps/>
-        </div>
-    } else {
-        layoutInternals = <div className="container"  style={{ marginTop: "25px" }} >
-
-            <StepsAsMenu />
-            <ServiceInfoCard/>
-        </div>
+            </Row>
+            </Col>
+        </Container>
+    } else if (layout === "CREATORS") {
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+                <Row>
+                    <ServiceInfoCard />
+                </Row>
+            </Col>
+        </Container>
+    } else if (layout === "BUSINESSES") {
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+                <Row>
+                    <BusinessInfoCard />
+                </Row>
+            </Col>
+        </Container>
+    } else if (layout === "INDIVIDUALS") {
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+                <Row>
+                    <IndividualInfoCard />
+                </Row>
+            </Col>
+        </Container>
+    } else if (layout === "ETHERSCAN") {
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+                <Row>
+                    <EtherscanCard />
+                </Row>
+            </Col>
+        </Container>
     }
 
     return (
-        <span>
+        <div style={{
+            "margin-bottom": "10vh"
+        }}>
             <Header />
             {layoutInternals}
-        </span>
+        </div>
     );
 }
 

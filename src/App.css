@@ -1,5 +1,32 @@
-.App {
-  text-align: center;
+body {
+  background: rgb(100,90,255);
+  background: radial-gradient(circle, rgba(100,90,255,1) 0%, rgba(90,86,255,1) 17%, rgba(91,91,255,1) 32%, rgba(33,139,182,1) 100%);
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body .btn {
+background-color:  rgba(255, 255, 255, 0.85);
+}
+
+body .btn:hover {
+  background-color: rgba(255,255,255,0.95);
+}
+
+.steps .btn {
+  background-color:  rgba(255, 255, 255, 0.75);
+}
+
+.steps .btn:hover {
+  background-color: rgba(255,255,255,0.95);
+}
+
+.header .btn {
+  font-weight: 400;
+  color: rgba(0,0,0,0.85)
 }
 
 .App-logo {

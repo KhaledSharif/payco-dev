@@ -40,44 +40,32 @@ function GroupExample() {
 
   return (
     <Container style={{
-      marginBottom: "25px",
-      maxWidth:"unset"
+      marginBottom: "25px"
     }}>
-          <CardGroup style={{ fontSize: "18px" }}>
-            <Card
-              style={{ backgroundColor: "#f3f3f3", marginRight: "20px", borderRadius: "20px", padding: "10px"}}
-              className="border border-0"
-            >
+          <Row>
+            <Col>
               <Button variant="light" style={ArrowHeaderStyle} onClick={()=>(setLayout("INDIVIDUALS"))}>
                 <FontAwesomeIcon icon={faUser} style={ArrowHeaderIcon}  /> For Individuals <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
 
 
-            </Card>
-            <Card
-              style={{ backgroundColor: "#f3f3f3", marginRight: "20px", borderRadius: "20px", padding: "10px" }}
-              className="border border-0"
-            >
+            </Col>
+            <Col>
               <Button variant="light" style={ArrowHeaderStyle} onClick={()=>(setLayout("BUSINESSES"))}>
                 <FontAwesomeIcon icon={faUserTie} style={ArrowHeaderIcon} /> For Businesses <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
 
 
-            </Card>
-            <Card
-              style={{ backgroundColor: "#f3f3f3", borderRadius: "20px", padding: "10px" }}
-              className="border border-0"
-            >
+            </Col>
+            <Col>
               <Button variant="light" style={ArrowHeaderStyle} onClick={()=>(setLayout("CREATORS"))}>
                 <FontAwesomeIcon icon={faUserAstronaut} style={ArrowHeaderIcon} /> For Creators <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faArrowRight} />
               </Button>
 
-
-
-            </Card>
-          </CardGroup>
+</Col>
+          </Row>
     </Container>
   );
 }

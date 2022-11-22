@@ -1,10 +1,11 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Image1 from "./jpg/7-lg.png";
+import Image1 from "./jpg/pos.webp";
 import {Col, Container, Row} from "react-bootstrap";
 import {faArrowRight, faCircleCheck, faLock, faScaleBalanced} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useEffect, useState} from "react";
+import {useEffect, useState,useContext} from "react";
+import {AppContext} from "./Context";
 
 const ArrowText = {
     "marginLeft": "1.1vw",
@@ -13,42 +14,41 @@ const ArrowText = {
 const MainBulletPoints = {
     "marginTop": "2.0vw"
 }
-
 const BulletStyle = {"marginBottom": "0.2vw", "padding": "0"}
 
 function MainCard() {
+    const {setLayout} = useContext(AppContext);
 
-    // const mediaQuery = "(min-width: 1000px)"
-    //
-    // const [matches, setMatches] = useState(window.matchMedia(mediaQuery).matches)
-    // useEffect(() => {
-    //     window
-    //         .matchMedia(mediaQuery)
-    //         .addEventListener('change', e => setMatches(e.matches));
-    // }, []);
+    const mediaQuery = "(min-width: 1000px)"
+
+    const [matches, setMatches] = useState(window.matchMedia(mediaQuery).matches)
+    useEffect(() => {
+        window
+            .matchMedia(mediaQuery)
+            .addEventListener('change', e => setMatches(e.matches));
+    }, []);
 
     let MainCardHeading;
 
-
     MainCardHeading = <p style={{"fontSize": "1.75vw", "lineHeight": "1.3em"}}>
-        Pay and get paid faster, easier,
-        and more reliably when you use Payco,
-        the payment platform of the future
+        Easily accept fiat and crypto currencies, both in-store and online
     </p>
-
 
     return <Container>
 
         <Card
             style={{
                 backgroundColor: "#f3f3f3",
-                marginTop: "0", marginBottom: "1.0vh",
+                marginTop: "0.5vw", marginBottom: "0.5vw",
                 borderRadius: "1.0vw",
                 overflow: "hidden"
             }}
             className="border border-0"
         >
             <Row>
+                <Col className="col-8" style={{"overflow": "hidden"}}>
+                <img src={Image1} style={{width: "100%", height: "100%"}}/>
+            </Col>
                 <Col className="col-4" style={{"display":"flex", "justifyContent":"center", "alignItems": "center"}}>
                     <div style={{ "width": "75%"}}>
 
@@ -76,9 +76,7 @@ function MainCard() {
                         </div>
                     </div>
                 </Col>
-                <Col className="col-8" style={{"overflow": "hidden"}}>
-                    <img src={Image1} style={{width: "100%", height: "100%"}}/>
-                </Col>
+
             </Row>
         </Card>
 

@@ -7,14 +7,14 @@ import {AppContext} from "./Context";
 function App() {
 
 
-    const [layout, setLayout] = useState("HOME")
+    const [layout, setLayout] = useState("ETHERSCAN")
 
     return (
         <AppContext.Provider value={{
             layout,
             setLayout
         }}>
-            <Layout/>
+            <Layout className="App" />
         </AppContext.Provider>
     );
 
