@@ -18,15 +18,6 @@ const BulletStyle = {"marginBottom": "0.2vw", "padding": "0"}
 
 function MainCard() {
 
-    // const mediaQuery = "(min-width: 1000px)"
-    //
-    // const [matches, setMatches] = useState(window.matchMedia(mediaQuery).matches)
-    // useEffect(() => {
-    //     window
-    //         .matchMedia(mediaQuery)
-    //         .addEventListener('change', e => setMatches(e.matches));
-    // }, []);
-
     let MainCardHeading;
 
 

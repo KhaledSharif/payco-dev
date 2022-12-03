@@ -9,6 +9,7 @@ import {Container, Col,Row} from "react-bootstrap";
 import IndividualInfoCard from "./IndividualInfoCard";
 import EtherscanCard from "./EtherscanCard";
 import VideoEditor from "./VideoEditor";
+import POS from "./POS";
 
 const ContainerStyle = {minWidth:"100vw", display: "flex", "justify-content": "center"};
 
@@ -66,6 +67,14 @@ function Layout() {
             <Col className="col-11">
                 <Row>
                     <VideoEditor />
+                </Row>
+            </Col>
+        </Container>
+    } else if (layout === "POS") {
+        layoutInternals = <Container style={ContainerStyle}>
+            <Col className="col-11">
+                <Row>
+                    <POS />
                 </Row>
             </Col>
         </Container>

@@ -70,15 +70,6 @@ function Header() {
 
                 <Col></Col>
 
-                {/*<Col style={{"display": "flex", "justifyContent": "center", "gap": "0.25vw"}}>*/}
-                {/*    <Button size="lg" variant="light" className="border border-0" style={ButtonStyle}><FontAwesomeIcon*/}
-                {/*        icon={faCircleInfo} style={ButtonIcon}/>About</Button>*/}
-                {/*    <Button size="lg" variant="light" className="border border-0" style={ButtonStyle}><FontAwesomeIcon*/}
-                {/*        icon={faList} style={ButtonIcon}/>Services</Button>*/}
-                {/*    <Button size="lg" variant="light" className="border border-0" style={ButtonStyle}><FontAwesomeIcon*/}
-                {/*        icon={faStore} style={ButtonIcon}/>Marketplace</Button>*/}
-                {/*</Col>*/}
-
                 <Col className="col-3"  style={{"display": "flex", "justifyContent": "right", "padding": 0, "gap":"0.25vw"}}>
                     <Button size="lg" variant="light" style={ButtonStyle} className="border border-0">EN <FontAwesomeIcon
                             style={ArrowHeaderSymbol} icon={faCircleChevronDown}/></Button>

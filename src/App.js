@@ -7,7 +7,7 @@ import {AppContext} from "./Context";
 function App() {
 
 
-    const [layout, setLayout] = useState("ETHERSCAN")
+    const [layout, setLayout] = useState("POS")
 
     return (
         <AppContext.Provider value={{

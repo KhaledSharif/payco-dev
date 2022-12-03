@@ -5,12 +5,54 @@ import Image2 from "./jpg/2.png";
 import Image3 from "./jpg/6.png";
 import Image4 from "./jpg/5.png";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRight, faUser, faUserTie, faUserAstronaut} from "@fortawesome/free-solid-svg-icons";
+import {
+    faArrowRight,
+    faUser,
+    faUserTie,
+    faUserAstronaut,
+    faCircleCheck,
+    faLock,
+    faMoneyCheck, faShop, faBank, faPeopleGroup, faUserGroup, faPaintbrush, faCoins, faWallet
+} from "@fortawesome/free-solid-svg-icons";
 import {useContext} from "react";
 import {AppContext} from "./Context";
 
+const IconStyle = {
+    "fontSize": "2.0vw", "justifyContent": "center",
+    "alignItems": "center",
+    "textAlign": "center"
+}
+
 const ArrowHeaderIcon = {
     "marginRight": "0.5vw"
+}
+
+const ArrowText = {
+    "fontSize": "0.85vw",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "textAlign": "center"
+}
+const MainBulletPoints = {
+    "marginTop": "2.0vw",
+    "padding": "0.0vw 1.0vw 0.0vw 1.0vw",
+    "display": "flex",
+    "alignItems": "center",
+    "flexDirection": "row",
+    "justifyContent": "center",
+    "gap": "2.0vw",
+    "height": "10vw"
+}
+
+const BulletStyle = {
+    "width": "33%",
+    "marginBottom": "0.2vw",
+    "padding": "0",
+    "display": "flex",
+    "alignItems": "center",
+    "flexDirection": "column",
+    "justifyContent": "center",
+    "gap": "1.0vh"
 }
 
 const ArrowHeaderSymbol = {
@@ -20,22 +62,9 @@ const ArrowHeaderSymbol = {
 }
 
 const ImageContainer = {
-    "height": "100%",
     "borderRadius": "1.0vw",
-    "overflow": "hidden"
-}
-
-const TextContainer = {
-    "paddingLeft": "2.5vw",
-    "paddingRight": "2.5vw",
-
-    "paddingTop": "1.1vw",
-    "paddingBottom": "1.1vw",
-
-    "fontSize": "1.0vw",
-    "textAlign": "center",
-
-    "fontWeight": "500"
+    "overflow": "hidden",
+    "height": "22.5vw"
 }
 
 const ArrowHeaderStyle = {
@@ -54,7 +83,7 @@ const ArrowHeaderStyle = {
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.01), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.05)"
 }
 
-const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw"}
+const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 0.5vw 2.0vw 0.5vw"}
 
 function GroupExample() {
     const {setLayout} = useContext(AppContext);
@@ -72,8 +101,24 @@ function GroupExample() {
             <div style={ImageContainer}>
                 <img src={Image2} style={{width: "100%", height: "100%"}}/>
             </div>
-            <div style={TextContainer}>
-                Store your money safely in a digital wallet that only you hold the keys to
+
+            <div style={MainBulletPoints}>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faWallet}/></div>
+                    <span style={ArrowText}>Store your money safely in a digital wallet</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faLock}/></div>
+                    <span style={ArrowText}>Only you hold the keys to your wallet</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faUserGroup}/></div>
+                    <span style={ArrowText}>Send and receive money for the lowest fees</span>
+                </div>
+
             </div>
 
         </Card>
@@ -89,8 +134,25 @@ function GroupExample() {
             <div style={ImageContainer}>
                 <img src={Image3} style={{width: "100%", height: "100%"}}/>
             </div>
-            <div style={TextContainer}>
-                Easily accept fiat and crypto currencies, both in-store and online
+
+
+            <div style={MainBulletPoints}>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faMoneyCheck}/></div>
+                    <span style={ArrowText}>Accept more currencies with our point of sale</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faShop}/></div>
+                    <span style={ArrowText}>Build an online store for your business for free</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faBank}/></div>
+                    <span style={ArrowText}>Import products faster with our letter of credit</span>
+                </div>
+
             </div>
 
         </Card>
@@ -106,8 +168,24 @@ function GroupExample() {
             <div style={ImageContainer}>
                 <img src={Image4} style={{width: "100%", height: "100%"}}/>
             </div>
-            <div style={TextContainer}>
-                Sell your artistic creations in a marketplace that empowers everyone
+
+            <div style={MainBulletPoints}>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faPaintbrush}/></div>
+                    <span style={ArrowText}>Sell your artistic creations online for free</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faCircleCheck}/></div>
+                    <span style={ArrowText}>Keep all your revenue below an annual threshold</span>
+                </div>
+
+                <div style={BulletStyle}>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faCoins}/></div>
+                    <span style={ArrowText}>Only pay fees after the threshold</span>
+                </div>
+
             </div>
 
         </Card>
