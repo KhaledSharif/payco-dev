@@ -49,37 +49,55 @@ function Header() {
 
 
     return (
-        <Container className="header" style={{"minWidth": "unset", "maxWidth": "unset", "justifyContent": "center", "display": "flex", "padding": 0, "margin":0}}>
-            <Col className="col-10" style={{ "padding": 0, "margin":0 }}>
-            <Row style={{
-                "paddingTop": "1.0vh",
-                "paddingBottom": "1.0vh",
+        <Container className="header" style={{
+            "minWidth": "unset",
+            "maxWidth": "unset",
+            "justifyContent": "center",
+            "display": "flex",
+            "padding": 0,
+            "margin": 0
+        }}>
+            <Col className="col-10" style={{"padding": 0, "margin": 0}}>
+                <Row style={{
+                    "paddingTop": "1.0vh",
+                    "paddingBottom": "1.0vh",
 
 
-            }}>
+                }}>
 
 
-                <Col className="col-2" style={{"display": "flex", "justifyContent": "left", "padding": 0, "gap": "0.25vw"}}>
-                    <Button size="lg" variant="light" style={ButtonStyle} className="border border-0"><FontAwesomeIcon
-                        style={SingularHeaderSymbol} icon={faMagnifyingGlass}/></Button>
-                    <Button size="lg" variant="light" style={ButtonStyle} className="border border-0"
-                            onClick={() => (setLayout("HOME"))}>
-                        <FontAwesomeIcon icon={faCirclePlus} style={{color: "#f70000"}}/> Payco</Button>
+                    <Col className="col-2"
+                         style={{
+                             "display": "flex", "justifyContent": "left", "padding": 0, "gap": "0.25vw"
+                         }}>
+                        <Button onClick={() => (setLayout("POS"))}
+                                size="lg" variant="light" style={ButtonStyle} className="border border-0">
+                            <FontAwesomeIcon
+                                style={SingularHeaderSymbol} icon={faMagnifyingGlass}/></Button>
+                        <Button size="lg" variant="light" style={ButtonStyle} className="border border-0"
+                                onClick={() => (setLayout("HOME"))}>
+                            <FontAwesomeIcon icon={faCirclePlus} style={{color: "#f70000"}}/> Payco</Button>
 
-                </Col>
+                    </Col>
 
-                <Col></Col>
+                    <Col></Col>
 
-                <Col className="col-3"  style={{"display": "flex", "justifyContent": "right", "padding": 0, "gap":"0.25vw"}}>
-                    <Button size="lg" variant="light" style={ButtonStyle} className="border border-0">EN <FontAwesomeIcon
+                    <Col className="col-3"
+                         style={{"display": "flex", "justifyContent": "right", "padding": 0, "gap": "0.25vw"}}>
+                        <Button
+                            onClick={() => (setLayout("VIDEO-EDITOR"))}
+                            size="lg" variant="light" style={ButtonStyle}
+                                className="border border-0">EN <FontAwesomeIcon
                             style={ArrowHeaderSymbol} icon={faCircleChevronDown}/></Button>
-                    <Button size="lg" variant="light" style={ButtonStyle} className="border border-0">Get
-                        Started <FontAwesomeIcon
-                            style={ArrowHeaderSymbol} icon={faArrowRight}/></Button>
+                        <Button
+                            onClick={() => (setLayout("ETHERSCAN"))}
+                            size="lg" variant="light" style={ButtonStyle} className="border border-0">Get
+                            Started <FontAwesomeIcon
+                                style={ArrowHeaderSymbol} icon={faArrowRight}/></Button>
 
-                </Col>
+                    </Col>
 
-            </Row>
+                </Row>
             </Col>
         </Container>
     );

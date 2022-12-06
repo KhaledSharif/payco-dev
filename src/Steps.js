@@ -18,45 +18,46 @@ import {useContext} from "react";
 import {AppContext} from "./Context";
 
 const IconStyle = {
-    "fontSize": "2.0vw", "justifyContent": "center",
+    "fontSize": "1.25vw",
+    "marginRight": "1.0vw",
+    "justifyContent": "center",
     "alignItems": "center",
     "textAlign": "center"
 }
 
 const ArrowHeaderIcon = {
-    "marginRight": "0.5vw"
+    "marginRight": "1.0vw"
 }
 
 const ArrowText = {
-    "fontSize": "0.85vw",
+    "fontSize": "1.0vw",
     "justifyContent": "center",
     "alignItems": "center",
     "textAlign": "center"
 }
 const MainBulletPoints = {
     "marginTop": "2.0vw",
-    "padding": "0.0vw 1.0vw 0.0vw 1.0vw",
+    "padding": "1.0vw 1.0vw 1.0vw 1.0vw",
     "display": "flex",
     "alignItems": "center",
-    "flexDirection": "row",
+    "flexDirection": "column",
     "justifyContent": "center",
-    "gap": "2.0vw",
-    "height": "10vw"
+    "gap": "2.0vw"
 }
 
 const BulletStyle = {
-    "width": "33%",
+    "width": "100%",
     "marginBottom": "0.2vw",
     "padding": "0",
     "display": "flex",
     "alignItems": "center",
-    "flexDirection": "column",
+    "flexDirection": "row",
     "justifyContent": "center",
     "gap": "1.0vh"
 }
 
 const ArrowHeaderSymbol = {
-    "marginLeft": "0.5vw",
+    "marginLeft": "1.0vw",
     "fontSize": "1.0vw",
     "color": "rgba(0,0,0,0.25)"
 }
@@ -64,7 +65,7 @@ const ArrowHeaderSymbol = {
 const ImageContainer = {
     "borderRadius": "1.0vw",
     "overflow": "hidden",
-    "height": "22.5vw"
+    "height": "28vw"
 }
 
 const ArrowHeaderStyle = {
@@ -83,12 +84,12 @@ const ArrowHeaderStyle = {
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.01), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.05)"
 }
 
-const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 0.5vw 2.0vw 0.5vw"}
+const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 2.5vw 2.0vw 2.5vw"}
 
 function GroupExample() {
     const {setLayout} = useContext(AppContext);
 
-    return <CardGroup className="steps" style={{"gap": "0.5vw"}}>
+    return <CardGroup className="steps" style={{"gap": "5.5vw", marginTop: "2.5vw"}}>
         <Card
             style={CommonStyle}
             className="border border-0"
@@ -156,39 +157,39 @@ function GroupExample() {
             </div>
 
         </Card>
-        <Card
-            style={CommonStyle}
-            className="border border-0"
-        >
-            <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("CREATORS"))}>
-                <FontAwesomeIcon icon={faUserAstronaut} style={ArrowHeaderIcon}/> For Creators <FontAwesomeIcon
-                style={ArrowHeaderSymbol} icon={faArrowRight}/>
-            </Button>
+        {/*<Card*/}
+        {/*    style={CommonStyle}*/}
+        {/*    className="border border-0"*/}
+        {/*>*/}
+        {/*    <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("CREATORS"))}>*/}
+        {/*        <FontAwesomeIcon icon={faUserAstronaut} style={ArrowHeaderIcon}/> For Creators <FontAwesomeIcon*/}
+        {/*        style={ArrowHeaderSymbol} icon={faArrowRight}/>*/}
+        {/*    </Button>*/}
 
-            <div style={ImageContainer}>
-                <img src={Image4} style={{width: "100%", height: "100%"}}/>
-            </div>
+        {/*    <div style={ImageContainer}>*/}
+        {/*        <img src={Image4} style={{width: "100%", height: "100%"}}/>*/}
+        {/*    </div>*/}
 
-            <div style={MainBulletPoints}>
+        {/*    <div style={MainBulletPoints}>*/}
 
-                <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faPaintbrush}/></div>
-                    <span style={ArrowText}>Sell your artistic creations online for free</span>
-                </div>
+        {/*        <div style={BulletStyle}>*/}
+        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faPaintbrush}/></div>*/}
+        {/*            <span style={ArrowText}>Sell your artistic creations online for free</span>*/}
+        {/*        </div>*/}
 
-                <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faCircleCheck}/></div>
-                    <span style={ArrowText}>Keep all your revenue below an annual threshold</span>
-                </div>
+        {/*        <div style={BulletStyle}>*/}
+        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faCircleCheck}/></div>*/}
+        {/*            <span style={ArrowText}>Keep all your revenue below an annual threshold</span>*/}
+        {/*        </div>*/}
 
-                <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faCoins}/></div>
-                    <span style={ArrowText}>Only pay fees after the threshold</span>
-                </div>
+        {/*        <div style={BulletStyle}>*/}
+        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faCoins}/></div>*/}
+        {/*            <span style={ArrowText}>Only pay fees after the threshold</span>*/}
+        {/*        </div>*/}
 
-            </div>
+        {/*    </div>*/}
 
-        </Card>
+        {/*</Card>*/}
     </CardGroup>
 
 }
