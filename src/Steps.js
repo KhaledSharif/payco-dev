@@ -30,12 +30,22 @@ const ArrowHeaderIcon = {
 }
 
 const ArrowText = {
-    "fontSize": "1.0vw",
+    "fontSize": "1.25vw",
+    "justifyContent": "center",
+    "alignItems": "center",
+    "textAlign": "center"
+}
+
+const SubArrowText = {
+    "color": "rgba(0,0,0,0.85)",
+    "padding": "0.25vw 2.0vw 1.25vw 2.0vw",
+    "fontSize": "0.75vw",
     "justifyContent": "center",
     "alignItems": "center",
     "textAlign": "center"
 }
 const MainBulletPoints = {
+    "color": "rgba(0,0,0,0.95)",
     "marginTop": "2.0vw",
     "padding": "1.0vw 1.0vw 1.0vw 1.0vw",
     "display": "flex",
@@ -44,14 +54,17 @@ const MainBulletPoints = {
     "justifyContent": "center",
     "gap": "2.0vw"
 }
-
+const SubBulletStyle = {
+    display: "flex",
+    flexDirection: "row"
+}
 const BulletStyle = {
     "width": "100%",
     "marginBottom": "0.2vw",
     "padding": "0",
     "display": "flex",
     "alignItems": "center",
-    "flexDirection": "row",
+    "flexDirection": "column",
     "justifyContent": "center",
     "gap": "1.0vh"
 }
@@ -77,14 +90,14 @@ const ArrowHeaderStyle = {
     "padding": "0.75vw",
     "width": "100%",
 
-    "fontSize": "1.1vw",
-    "fontWeight": "500",
+    "fontSize": "1.2vw",
+    "fontWeight": "400",
 
     "marginBottom": "1.0vw",
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.01), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.05)"
 }
 
-const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 2.5vw 2.0vw 2.5vw"}
+const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 1.0vw"}
 
 function GroupExample() {
     const {setLayout} = useContext(AppContext);
@@ -95,7 +108,7 @@ function GroupExample() {
             className="border border-0"
         >
             <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("INDIVIDUALS"))}>
-                <FontAwesomeIcon icon={faUser} style={ArrowHeaderIcon}/> For Individuals <FontAwesomeIcon
+                <FontAwesomeIcon icon={faUser} style={ArrowHeaderIcon}/>Payco For Individuals <FontAwesomeIcon
                 style={ArrowHeaderSymbol} icon={faArrowRight}/>
             </Button>
 
@@ -106,18 +119,39 @@ function GroupExample() {
             <div style={MainBulletPoints}>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faWallet}/></div>
-                    <span style={ArrowText}>Store your money safely in a digital wallet</span>
+                    <div style={SubBulletStyle}>
+
+                        <div style={IconStyle}><FontAwesomeIcon icon={faWallet}/></div>
+                        <span style={ArrowText}>Store your money safely in a digital wallet</span>
+                    </div>
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
                 </div>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faLock}/></div>
-                    <span style={ArrowText}>Only you hold the keys to your wallet</span>
+                    <div style={SubBulletStyle}>
+                        <div style={IconStyle}><FontAwesomeIcon icon={faLock}/></div>
+                        <span style={ArrowText}>Only you hold the keys to your wallet</span>
+                    </div>
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
+
                 </div>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faUserGroup}/></div>
-                    <span style={ArrowText}>Send and receive money for the lowest fees</span>
+                    <div style={SubBulletStyle}>
+                        <div style={IconStyle}><FontAwesomeIcon icon={faUserGroup}/></div>
+                        <span style={ArrowText}>Send and receive money for the lowest fees</span>
+                    </div>
+
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
                 </div>
 
             </div>
@@ -128,7 +162,7 @@ function GroupExample() {
             className="border border-0"
         >
             <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("BUSINESSES"))}>
-                <FontAwesomeIcon icon={faUserTie} style={ArrowHeaderIcon}/> For Businesses <FontAwesomeIcon
+                <FontAwesomeIcon icon={faUserTie} style={ArrowHeaderIcon}/>Payco For Businesses <FontAwesomeIcon
                 style={ArrowHeaderSymbol} icon={faArrowRight}/>
             </Button>
 
@@ -140,18 +174,36 @@ function GroupExample() {
             <div style={MainBulletPoints}>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faMoneyCheck}/></div>
-                    <span style={ArrowText}>Accept more currencies with our point of sale</span>
+                    <div style={SubBulletStyle}>
+                        <div style={IconStyle}><FontAwesomeIcon icon={faMoneyCheck}/></div>
+                        <span style={ArrowText}>Accept more currencies with our point of sale</span>
+                    </div>
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
                 </div>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faShop}/></div>
-                    <span style={ArrowText}>Build an online store for your business for free</span>
+                    <div style={SubBulletStyle}>
+                        <div style={IconStyle}><FontAwesomeIcon icon={faShop}/></div>
+                        <span style={ArrowText}>Build an online store for your business for free</span>
+                    </div>
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
                 </div>
 
                 <div style={BulletStyle}>
-                    <div style={IconStyle}><FontAwesomeIcon icon={faBank}/></div>
-                    <span style={ArrowText}>Import products faster with our letter of credit</span>
+                    <div style={SubBulletStyle}>
+                        <div style={IconStyle}><FontAwesomeIcon icon={faBank}/></div>
+                        <span style={ArrowText}>Import products faster with our letter of credit</span>
+                    </div>
+                    <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
+                        what
+                        is happening in a user-friendly manner. Secure Enclave technology enabled by default.
+                    </div>
                 </div>
 
             </div>
