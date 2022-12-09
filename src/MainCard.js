@@ -33,7 +33,7 @@ function MainCard() {
         <Card
             style={{
                 backgroundColor: "#f3f3f3",
-                marginTop: "0", marginBottom: "1.0vh",
+                marginTop: "1.25vh", marginBottom: "0",
                 borderRadius: "1.0vw",
                 overflow: "hidden"
             }}

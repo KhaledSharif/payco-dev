@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 import {useContext} from "react";
 import {AppContext} from "./Context";
+import SmallLogo from "./jpg/smol-logo.png"
 
 const ArrowHeaderSymbol = {
     "marginLeft": "0.3vw",
@@ -59,7 +60,7 @@ function Header() {
         }}>
             <Col className="col-10" style={{"padding": 0, "margin": 0}}>
                 <Row style={{
-                    "paddingTop": "1.0vh",
+                    "paddingTop": "1.25vh",
                     "paddingBottom": "1.0vh",
 
 
@@ -76,7 +77,14 @@ function Header() {
                                 style={SingularHeaderSymbol} icon={faMagnifyingGlass}/></Button>
                         <Button size="lg" variant="light" style={ButtonStyle} className="border border-0"
                                 onClick={() => (setLayout("HOME"))}>
-                            <FontAwesomeIcon icon={faCirclePlus} style={{color: "#f70000"}}/> Payco</Button>
+                            {/* <FontAwesomeIcon icon={faCirclePlus} style={{color: "#f70000"}}/> */}
+                            
+                            <img src={SmallLogo} style={{
+                                width: "1.5vw",
+                                marginRight: "0.75vw"
+                            }} />
+                            
+                             Payco</Button>
 
                     </Col>
 

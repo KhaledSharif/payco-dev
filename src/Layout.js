@@ -2,6 +2,8 @@ import React, {useContext, useState} from "react";
 import Header from "./Header";
 import Steps from "./Steps"
 import MainCard from "./MainCard";
+import SecondaryCard from "./SecondaryCard";
+
 import {AppContext} from "./Context";
 import ServiceInfoCard from "./ServiceInfoCard";
 import BusinessInfoCard from "./BusinessInfoCard";
@@ -27,6 +29,9 @@ function Layout() {
             </Row>
             <Row>
             <Steps/>
+            </Row>
+            <Row>
+            <SecondaryCard/>
             </Row>
             </Col>
         </Container>

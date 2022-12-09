@@ -3,7 +3,11 @@ import Card from "react-bootstrap/Card";
 import CardGroup from "react-bootstrap/CardGroup";
 import Image2 from "./jpg/2.png";
 import Image3 from "./jpg/6.png";
-import Image4 from "./jpg/5.png";
+
+
+
+
+
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
     faArrowRight,
@@ -76,6 +80,7 @@ const ArrowHeaderSymbol = {
 }
 
 const ImageContainer = {
+    "marginTop": "0.5vh",
     "borderRadius": "1.0vw",
     "overflow": "hidden",
     "height": "28vw"
@@ -90,19 +95,19 @@ const ArrowHeaderStyle = {
     "padding": "0.75vw",
     "width": "100%",
 
-    "fontSize": "1.2vw",
+    "fontSize": "1.0vw",
     "fontWeight": "400",
 
     "marginBottom": "1.0vw",
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.01), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.05)"
 }
 
-const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", padding: "1.0vw 1.0vw"}
+const CommonStyle = {backgroundColor: "#f3f3f3", borderRadius: "1.0vw", paddingLeft: "1.0vw", paddingRight: "1.0vw", paddingTop: "2.0vh"}
 
 function GroupExample() {
     const {setLayout} = useContext(AppContext);
 
-    return <CardGroup className="steps" style={{"gap": "5.5vw", marginTop: "2.5vw"}}>
+    return <CardGroup className="steps" style={{"gap": "7.5vw", marginTop: "3.5vh"}}>
         <Card
             style={CommonStyle}
             className="border border-0"
@@ -132,8 +137,9 @@ function GroupExample() {
 
                 <div style={BulletStyle}>
                     <div style={SubBulletStyle}>
-                        <div style={IconStyle}><FontAwesomeIcon icon={faLock}/></div>
-                        <span style={ArrowText}>Only you hold the keys to your wallet</span>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faUserGroup}/></div>
+                        <span style={ArrowText}>Send and receive money for the lowest fees</span>
+                        
                     </div>
                     <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
                         what
@@ -144,8 +150,8 @@ function GroupExample() {
 
                 <div style={BulletStyle}>
                     <div style={SubBulletStyle}>
-                        <div style={IconStyle}><FontAwesomeIcon icon={faUserGroup}/></div>
-                        <span style={ArrowText}>Send and receive money for the lowest fees</span>
+                    <div style={IconStyle}><FontAwesomeIcon icon={faLock}/></div>
+                        <span style={ArrowText}>Only you hold the keys to your wallet</span>
                     </div>
 
                     <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
@@ -154,6 +160,15 @@ function GroupExample() {
                     </div>
                 </div>
 
+            </div>
+
+            <div style={{
+                marginTop: "3.0vh"
+            }}>
+            <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("INDIVIDUALS"))}>
+            Browse Services for Individuals <FontAwesomeIcon
+                style={ArrowHeaderSymbol} icon={faArrowRight}/>
+            </Button>
             </div>
 
         </Card>
@@ -175,8 +190,11 @@ function GroupExample() {
 
                 <div style={BulletStyle}>
                     <div style={SubBulletStyle}>
-                        <div style={IconStyle}><FontAwesomeIcon icon={faMoneyCheck}/></div>
-                        <span style={ArrowText}>Accept more currencies with our point of sale</span>
+
+                    <div style={IconStyle}><FontAwesomeIcon icon={faShop}/></div>
+                        <span style={ArrowText}>Build an online store for your business for free</span>
+
+                        
                     </div>
                     <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
                         what
@@ -186,8 +204,9 @@ function GroupExample() {
 
                 <div style={BulletStyle}>
                     <div style={SubBulletStyle}>
-                        <div style={IconStyle}><FontAwesomeIcon icon={faShop}/></div>
-                        <span style={ArrowText}>Build an online store for your business for free</span>
+                        
+                    <div style={IconStyle}><FontAwesomeIcon icon={faMoneyCheck}/></div>
+                        <span style={ArrowText}>Accept more currencies with our point of sale</span>
                     </div>
                     <div style={SubArrowText}>All transactions are protected as the wallet parses call data, showing
                         what
@@ -207,41 +226,16 @@ function GroupExample() {
                 </div>
 
             </div>
-
+            <div style={{
+                marginTop: "3.0vh"
+            }}>
+            <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("BUSINESSES"))}>
+            Browse Services for Businesses  <FontAwesomeIcon
+                style={ArrowHeaderSymbol} icon={faArrowRight}/>
+            </Button>
+            </div>
         </Card>
-        {/*<Card*/}
-        {/*    style={CommonStyle}*/}
-        {/*    className="border border-0"*/}
-        {/*>*/}
-        {/*    <Button variant="light" style={ArrowHeaderStyle} onClick={() => (setLayout("CREATORS"))}>*/}
-        {/*        <FontAwesomeIcon icon={faUserAstronaut} style={ArrowHeaderIcon}/> For Creators <FontAwesomeIcon*/}
-        {/*        style={ArrowHeaderSymbol} icon={faArrowRight}/>*/}
-        {/*    </Button>*/}
 
-        {/*    <div style={ImageContainer}>*/}
-        {/*        <img src={Image4} style={{width: "100%", height: "100%"}}/>*/}
-        {/*    </div>*/}
-
-        {/*    <div style={MainBulletPoints}>*/}
-
-        {/*        <div style={BulletStyle}>*/}
-        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faPaintbrush}/></div>*/}
-        {/*            <span style={ArrowText}>Sell your artistic creations online for free</span>*/}
-        {/*        </div>*/}
-
-        {/*        <div style={BulletStyle}>*/}
-        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faCircleCheck}/></div>*/}
-        {/*            <span style={ArrowText}>Keep all your revenue below an annual threshold</span>*/}
-        {/*        </div>*/}
-
-        {/*        <div style={BulletStyle}>*/}
-        {/*            <div style={IconStyle}><FontAwesomeIcon icon={faCoins}/></div>*/}
-        {/*            <span style={ArrowText}>Only pay fees after the threshold</span>*/}
-        {/*        </div>*/}
-
-        {/*    </div>*/}
-
-        {/*</Card>*/}
     </CardGroup>
 
 }

@@ -20,13 +20,13 @@ import {useEffect, useState} from "react";
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
 const UserIconStyle = {
-    fontSize: "1.0vw",
+    fontSize: "0.5vw",
     marginLeft: "0.35vw",
     marginRight: "0.35vw"
 }
 
 const ButtonStyle = {
-    "fontSize": "1.0vw",
+    "fontSize": "0.5vw",
     "borderRadius": "1.0vw",
     "padding": "0.5vw 0.95vw 0.5vw 0.95vw",
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)"
@@ -47,22 +47,24 @@ const ArrowHeaderSymbol = {
 }
 
 const UserNameStyle = {
-    fontSize: "1.0vw",
+    fontSize: "0.6vw",
 }
 
 const PaymentStyle = {
-    margin: "0.5vw 0.5vw 0.25vw 0.25vw",
-    fontSize: "1.0vw",
+    marginTop: "5vh",
+    fontSize: "0.1vw",
     backgroundColor: "rgba(0,0,0,0.1)",
-    padding: "1.0vw",
+    paddingTop: "1.0vh",
+    paddingBottom: "1.0vh",
+
     borderRadius: "1.0vw",
     zIndex: "0",
 
 }
 
 const ArrowText = {
-    marginLeft: "1.1vw",
-    fontSize: "1.05vw"
+    marginLeft: "0.55vw",
+    fontSize: "0.75vw"
 }
 const MainBulletPoints = {
     marginTop: "2.0vw",
@@ -75,17 +77,16 @@ const ImageContainerStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "1.0vw",
+    borderRadius: "0.25vw",
     overflow: "hidden",
     margin: "1.0vw"
 }
 
 const ProfileImageStyle = {
-    borderRadius: "1.0vw",
-    height: "20.0vh"
+    height: "5.5vw"
 }
 
-const CenterStyle = {"display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center"}
+const CenterStyle = {"marginTop": "2.0vh", "display": "flex", "flexDirection": "column", "alignItems": "center", "justifyContent": "center"}
 
 const BulletStyle = {"marginBottom": "0.5vw", "padding": "0"}
 
@@ -97,7 +98,7 @@ function MainCard() {
         setTransactionState("PENDING");
         window.setTimeout(() => {
             setTransactionState("COMPLETE")
-        }, 3000)
+        }, 2000)
     }
 
     let progressBar;
@@ -134,7 +135,7 @@ function MainCard() {
             size="lg" variant="light" style={ButtonStyle} className="border border-0">
             <FontAwesomeIcon
                 style={{
-                    marginRight: "1.0vw",
+                    marginRight: "0.25vw",
 
                 }} icon={faRotateLeft}/>
             Redo </Button>
@@ -146,11 +147,9 @@ function MainCard() {
         <Card
             style={{
                 backgroundColor: "#f3f3f3",
-                marginTop: "0", marginBottom: "1.0vh",
-                paddingTop: "15.0vh",
-                paddingBottom: "15.0vh",
-                paddingLeft: "1.0vw",
-                paddingRight: "1.0vw",
+                paddingTop: "1.0vh", 
+                paddingBottom: "1.0vh",
+                margin: "0",
                 zIndex: "1",
                 borderRadius: "1.0vw",
                 overflow: "hidden"
@@ -159,9 +158,8 @@ function MainCard() {
         >
 
             <Row>
-                <Col></Col>
 
-                <Col className="col-2" style={CenterStyle}>
+                <Col  style={CenterStyle}>
 
                     <div style={ImageContainerStyle}>
                         <img src={Image1} style={ProfileImageStyle}/>
@@ -176,17 +174,9 @@ function MainCard() {
 
                 </Col>
 
-                <Col className="col-4" style={{display: "flex", justifyContent: "center", height: "10%"}}>
-                    <div style={PaymentStyle}><FontAwesomeIcon
-                        style={ArrowHeaderSymbol} icon={faArrowRight}/>
-                        $420.69<FontAwesomeIcon
-                            style={ArrowHeaderSymbol} icon={faArrowRight}/>
-                    </div>
 
 
-                </Col>
-
-                <Col className="col-2" style={CenterStyle}>
+                <Col  style={CenterStyle}>
 
                     <div style={ImageContainerStyle}>
                         <img src={Image2} style={ProfileImageStyle}/>
@@ -200,7 +190,6 @@ function MainCard() {
 
                 </Col>
 
-                <Col></Col>
 
             </Row>
 
@@ -208,12 +197,8 @@ function MainCard() {
             <Row style={CenterStyle}>
                 <Col className="col-8" style={{
                     zIndex: "-5",
-                    marginTop: "-28vh",
-                    paddingLeft: "11vw",
-                    paddingRight: "11vw",
-                    paddingTop: "2.0vh",
-                    paddingBottom: "2.0vh",
-
+                    position: "absolute",
+                    marginTop: "-25vh"
 
                 }}>
 
@@ -225,13 +210,8 @@ function MainCard() {
             <Row style={CenterStyle}>
 
 
-                <Col className="col-4" style={{
-
-                    paddingLeft: "2.75vw",
-                    paddingRight: "2.75vw",
-                    paddingTop: "8.0vh",
-                    paddingBottom: "1.0vh",
-
+                <Col  style={{
+                    marginLeft: "1.25vw"
                 }}>
 
                     {transactionDetails}

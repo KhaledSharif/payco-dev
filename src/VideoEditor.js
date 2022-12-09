@@ -1,7 +1,7 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-import Video1 from "./mp4/lou.mp4"
+// import Video1 from "./mp4/lou.mp4"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
     faPlay, faPause, faWindowMaximize, faWindowMinimize
@@ -117,7 +117,7 @@ function MainCard() {
                 <Col style={CenterStyleCol}>
                     <Row style={{width:"100%", padding: 0, margin: 0}}>
                         <div style={VideoContainerStyle}>
-                            <video ref={VideoRef} src={Video1} style={VideoStyle} width="100%"/>
+                            {/* <video ref={VideoRef} src={Video1} style={VideoStyle} width="100%"/> */}
                         </div>
                     </Row>
 
