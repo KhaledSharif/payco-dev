@@ -1,93 +1,79 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import Header from "./Header";
 import Steps from "./Steps"
 import MainCard from "./MainCard";
+import Storefront from "./Storefront";
 import SecondaryCard from "./SecondaryCard";
 
-import {AppContext} from "./Context";
-import ServiceInfoCard from "./ServiceInfoCard";
+import { AppContext } from "./Context";
 import BusinessInfoCard from "./BusinessInfoCard";
-import {Container, Col,Row} from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import IndividualInfoCard from "./IndividualInfoCard";
 import EtherscanCard from "./EtherscanCard";
+import EthersCard from "./EthersCard";
+
 import VideoEditor from "./VideoEditor";
 import POS from "./POS";
 
-const ContainerStyle = {minWidth:"100vw", display: "flex", "justify-content": "center"};
+const ContainerStyle = { minWidth: "100vw", display: "flex", "justify-content": "center" };
+const CenterStyle = {
+    "display": "flex",
+    "alignItems": "center",
+    "justifyContent": "center",
+    "flexDirection": "row",
+    "margin": 0,
+    "padding": 0,
+    "gap": "0.5vw"
+}
 
 function Layout() {
 
-    const {layout} = useContext(AppContext);
+    const { layout } = useContext(AppContext);
 
     let layoutInternals;
 
     if (layout === "HOME") {
         layoutInternals = <Container style={ContainerStyle}>
             <Col className="col-11">
-            <Row>
-            <MainCard/>
-            </Row>
-            <Row>
-            <Steps/>
-            </Row>
-            <Row>
-            <SecondaryCard/>
-            </Row>
-            </Col>
-        </Container>
-    } else if (layout === "CREATORS") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
                 <Row>
-                    <ServiceInfoCard />
+                    <MainCard />
+                </Row>
+                <Row>
+                    <Steps />
+                </Row>
+                <Row>
+                    <SecondaryCard />
                 </Row>
             </Col>
         </Container>
     } else if (layout === "BUSINESSES") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
-                <Row>
-                    <BusinessInfoCard />
-                </Row>
-            </Col>
-        </Container>
+        layoutInternals = <BusinessInfoCard />
     } else if (layout === "INDIVIDUALS") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
-                <Row>
-                    <IndividualInfoCard />
-                </Row>
-            </Col>
-        </Container>
+        layoutInternals = <IndividualInfoCard />
     } else if (layout === "ETHERSCAN") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
-                <Row>
-                    <EtherscanCard />
-                </Row>
-            </Col>
-        </Container>
+        layoutInternals = <EtherscanCard />
+
     } else if (layout === "VIDEO-EDITOR") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
-                <Row>
-                    <VideoEditor />
-                </Row>
-            </Col>
-        </Container>
+        layoutInternals = <VideoEditor />
+
     } else if (layout === "POS") {
-        layoutInternals = <Container style={ContainerStyle}>
-            <Col className="col-11">
-                <Row>
+        layoutInternals =
+            <Row style={CenterStyle}>
+                <Col className="col-11">
                     <POS />
-                </Row>
-            </Col>
-        </Container>
+                </Col>
+            </Row>
+    } else if (layout === "STORE-FRONT") {
+        layoutInternals = <Storefront />
+
+    } else if (layout === "ETHERS") {
+        layoutInternals = <EthersCard />
+
     }
 
     return (
         <div style={{
-            "margin-bottom": "10vh"
+            "marginBottom": "10vh"
         }}>
             <Header />
             {layoutInternals}

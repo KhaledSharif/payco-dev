@@ -7,7 +7,7 @@ import {AppContext} from "./Context";
 function App() {
 
 
-    const [layout, setLayout] = useState("VIDEO-EDITOR")
+    const [layout, setLayout] = useState("BUSINESSES")
 
     return (
         <AppContext.Provider value={{

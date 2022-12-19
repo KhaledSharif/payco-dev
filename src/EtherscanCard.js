@@ -197,8 +197,8 @@ function MainCard() {
             <Row style={CenterStyle}>
                 <Col className="col-8" style={{
                     zIndex: "-5",
-                    position: "absolute",
-                    marginTop: "-25vh"
+                    position: "relative",
+                    marginTop: "-12.5vw"
 
                 }}>
 

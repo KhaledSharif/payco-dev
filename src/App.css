@@ -1,6 +1,7 @@
 body {
-  background: rgb(100,90,255);
-  background: radial-gradient(circle, rgba(100,90,255,1) 0%, rgba(90,86,255,1) 17%, rgba(91,91,255,1) 32%, rgba(33,139,182,1) 100%);
+  background: linear-gradient(318deg, rgb(36, 43, 70) 0%, rgb(26, 50, 86) 14%, rgb(34, 78, 107) 36%, 
+  rgb(26, 48, 82) 47%, rgb(24, 50, 78) 59%, rgb(34, 55, 74) 69%, 
+  rgb(24, 49, 74) 76%, rgb(24, 51, 66) 85%, rgb(17, 46, 79) 100%);
   overflow-x: hidden;
 }
 
@@ -10,6 +11,10 @@ body::-webkit-scrollbar {
 
 body .btn {
 background-color:  rgba(255, 255, 255, 0.85);
+}
+
+img.clickable {
+  cursor: pointer;
 }
 
 body .btn:hover {
@@ -27,6 +32,18 @@ body .btn:hover {
 .header .btn {
   font-weight: 400;
   color: rgba(0,0,0,0.85)
+}
+
+.header .btn:active {
+  background-color: rgba(255,255,255,0.95);
+}
+
+.header .btn:visted {
+  background-color: rgba(255,255,255,0.95);
+}
+
+.header .btn:focus {
+  background-color: rgba(255,255,255,0.95);
 }
 
 .App-logo {

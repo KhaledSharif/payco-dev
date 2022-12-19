@@ -58,16 +58,6 @@ const Sonnet = () => {
     </div>
 }
 
-const ArrowText = {
-    "marginLeft": "1.1vw",
-    "fontSize": "1.05vw"
-}
-const MainBulletPoints = {
-    "marginTop": "2.0vw"
-}
-
-const BulletStyle = {"marginBottom": "0.2vw", "padding": "0"}
-
 const CenterStyle = {"display": "flex", "justifyContent": "center", "alignItems": "center", flexDirection: "column", gap: "1.0vw"};
 
 const ShoppingCart = () => {
@@ -119,13 +109,11 @@ const ShoppingCart = () => {
 function MainCard() {
 
 
-    return <Container>
-
-        <Card
+    return <Card
             style={{
                 backgroundColor: "#f3f3f3",
                 marginTop: "0",
-                marginBottom: "1.0vh",
+                marginBottom: "100vh",
                 padding: "2.0vw 1.0vw 2.0vw 1.0vw",
                 borderRadius: "1.0vw",
                 overflow: "hidden"
@@ -185,8 +173,6 @@ function MainCard() {
                 </Col>
             </Row>
         </Card>
-
-    </Container>
 }
 
 export default MainCard;
