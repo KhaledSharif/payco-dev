@@ -2,6 +2,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Accordion from 'react-bootstrap/Accordion';
+import Alert from 'react-bootstrap/Alert';
+
+import { Alchemy, Network } from "alchemy-sdk";
 import { ethers } from "ethers";
 
 import { Col, Container, Row, Spinner } from "react-bootstrap";
@@ -15,21 +18,71 @@ import {
     faLock,
     faScaleBalanced,
     faQuestionCircle,
-    faCopy
+    faCopy,
+    faInfoCircle,
+    faClock
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
-// Specify your own API keys
-// Each is optional, and if you omit it the default
-// API key for that service will be used.
+import Table from 'react-bootstrap/Table';
+
+const StripedRowExample = ({ data }) => {
+
+    if (data.length === 0) {
+        return <div>
+            Not yet fetched, please click on refresh button
+        </div>
+    }
+
+    const tableRows = data.transfers.map((x, i) => (
+        <tr key={i}>
+            <td>{x.metadata.blockTimestamp}</td>
+            <td>{x.hash.substring(0, 6)}</td>
+            <td>{x.blockNum}</td>
+            <td>{x.from.substring(0, 6)}</td>
+            <td>{x.to.substring(0, 6)}</td>
+            <td>{x.value} {x.asset}</td>
+        </tr>
+    ))
+
+    return (
+        <Table striped style={{ width: "100%" }}>
+            <thead>
+                <tr>
+                    <th>Age</th>
+                    <th>Tx Hash</th>
+                    <th>Block</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {tableRows}
+            </tbody>
+        </Table>
+    );
+}
+
+const config = {
+    apiKey: "c4d_elwERy9uvEdZJGx8Q3bSGfqgfy3_",
+    network: Network.ETH_MAINNET,
+};
 
 const SingularHeaderSymbol = {
     "margin": "0",
     "fontSize": "0.8vw",
     "color": "rgba(0,0,0,0.25)"
 }
+
+const InfoHeaderSymbol = {
+    "marginRight": "0.5vw",
+    "fontSize": "0.8vw",
+    "color": "rgba(0,0,0,0.5)"
+}
+
 const UserIconStyle = {
     fontSize: "0.5vw",
     marginLeft: "0.35vw",
@@ -106,20 +159,30 @@ function MainCard() {
 
     const [transactionState, setTransactionState] = useState("COMPLETE")
 
+    const [EthAddress, SetEthAddress] = useState();
+
+    const [TransactionList, SetTransactionList] = useState([])
+
+
     const resetTransaction = () => {
         setTransactionState("PENDING");
-        const EthersProvider = new ethers.providers.AlchemyProvider(
-            "homestead",
-            "c4d_elwERy9uvEdZJGx8Q3bSGfqgfy3_"
-        )
-        EthersProvider.getBalance("0x912fD21d7a69678227fE6d08C64222Db41477bA0").then((x) => {
-            const e = ethers.utils.formatEther(x);
-            setTransactionState("COMPLETE");
-            console.log({ x, e })
-        }).catch((e) => {
-            console.error({ e })
-        })
 
+        const alchemy = new Alchemy(config);
+
+        alchemy.core.getAssetTransfers({
+            fromBlock: "0x0",
+            fromAddress: "0x912fD21d7a69678227fE6d08C64222Db41477bA0",
+            category: ["external", "internal"],
+            order: "desc",
+            maxCount: 25,
+            withMetadata: true,
+        }).then((data) => {
+
+            console.log({ data });
+            SetTransactionList(data)
+            setTransactionState("COMPLETE");
+
+        })
     }
 
     let progressBar;
@@ -169,7 +232,7 @@ function MainCard() {
             style={{
                 backgroundColor: "rgba(255,255,255,0.875)",
 
-                
+
 
                 paddingTop: "5vh ",
                 paddingLeft: "10vw",
@@ -196,10 +259,46 @@ function MainCard() {
                 <Col className="col-4" style={CenterStyle}>
                     <Accordion style={{ width: "100%" }} defaultActiveKey="0">
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header>Ethereum Addresses</Accordion.Header>
+                            <Accordion.Header>ETH Transactions</Accordion.Header>
                             <Accordion.Body>
-                                <ListGroup as="ul"  variant="flush">
+                                <ListGroup as="ul" variant="flush">
                                     <ListGroup.Item as="li" active>
+                                        From 0x912fD2
+                                    </ListGroup.Item>
+                                    <ListGroup.Item as="li">
+                                        From 0x912fD2
+
+                                    </ListGroup.Item>
+                                    <ListGroup.Item as="li">
+                                        From 0x912fD2
+                                    </ListGroup.Item>
+                                    <ListGroup.Item as="li">
+                                        From 0x912fD2
+
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header>ERC-20 Tokens</Accordion.Header>
+                            <Accordion.Body>
+                                <ListGroup as="ul" variant="flush">
+                                    <ListGroup.Item as="li">
+                                        All Tokens owned by 0x912fD2
+                                    </ListGroup.Item>
+                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
+                                    <ListGroup.Item as="li">
+                                        Morbi leo risus
+                                    </ListGroup.Item>
+                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
+                                </ListGroup>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        <Accordion.Item eventKey="4">
+                            <Accordion.Header>ERC-721 NFTs</Accordion.Header>
+                            <Accordion.Body>
+                                <ListGroup as="ul" variant="flush">
+                                    <ListGroup.Item as="li">
                                         Cras justo odio
                                     </ListGroup.Item>
                                     <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
@@ -210,56 +309,23 @@ function MainCard() {
                                 </ListGroup>
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="1">
-                            <Accordion.Header>ETH Transactions</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup as="ul">
-                                    <ListGroup.Item as="li" active>
-                                        Cras justo odio
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item as="li" disabled>
-                                        Morbi leo risus
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="2">
-                            <Accordion.Header>ERC-20 Tokens</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup as="ul">
-                                    <ListGroup.Item as="li" active>
-                                        Cras justo odio
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item as="li" disabled>
-                                        Morbi leo risus
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        <Accordion.Item eventKey="4">
-                            <Accordion.Header>USDC Transactions</Accordion.Header>
-                            <Accordion.Body>
-                                <ListGroup as="ul">
-                                    <ListGroup.Item as="li" active>
-                                        Cras justo odio
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item as="li" disabled>
-                                        Morbi leo risus
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
-                            </Accordion.Body>
-                        </Accordion.Item>
                     </Accordion>
 
                 </Col>
 
-                <Col className="col-6" style={CenterStyle}>
+                <Col className="col-8" style={CenterStyle}>
+
+                    <div style={{
+                        width: "100%"
+                    }}>
+                        {progressBar}
+                    </div>
+
+                    <br />
+
+
+
+
                     <ListGroup style={{ width: "100%" }} as="ol">
                         <ListGroup.Item
                             as="li"
@@ -273,7 +339,7 @@ function MainCard() {
                                 size="lg" variant="light" style={ButtonStyle} className="border border-0">
                                 <FontAwesomeIcon
                                     style={SingularHeaderSymbol} icon={faCopy} />
-                                    
+
                             </Button>
                             <Button
                                 size="lg" variant="light" style={ButtonStyle} className="border border-0">
@@ -287,8 +353,8 @@ function MainCard() {
                         >
                             <div className="ms-2 me-auto">
                                 <div className="fw-bold">Balance</div>
-                                
-                                    27.107479912036621837 Ether
+
+                                27.107479912036621837 Ether
                             </div>
                             <Button
                                 size="lg" variant="light" style={ButtonStyle} className="border border-0">
@@ -302,7 +368,7 @@ function MainCard() {
                         >
                             <div className="ms-2 me-auto">
                                 <div className="fw-bold">Transaction Count</div>
-                                1,522,704 
+                                1,522,704
                             </div>
                             <Button
                                 size="lg" variant="light" style={ButtonStyle} className="border border-0">
@@ -311,20 +377,34 @@ function MainCard() {
                             </Button>
                         </ListGroup.Item>
                     </ListGroup>
-                    <br/>
+                    <br />
+
+
 
                     <div style={{
-                        width: "100%"
+
+                        width: "100%",
+                        backgroundColor: "rgba(255,255,255,0.75)",
+                        paddingTop: "2%",
+                        paddingBottom: "2%",
+                        paddingLeft: "1.0vw",
+                        paddingRight: "1.0vw",
+                        borderRadius: "0.25vw"
+
                     }}>
-                        {progressBar}
+
+                        <Alert variant="info">
+                            <FontAwesomeIcon style={InfoHeaderSymbol} icon={faInfoCircle} />
+                            Shown below: latest 25 txs from a total of 1.5M txs
+                        </Alert>
+
+                        <StripedRowExample data={TransactionList} />
                     </div>
-
-                    <br/>
-
-
+                    <br />
                     <div>
                         {redoButton}
                     </div>
+
 
                 </Col>
 
