@@ -1,12 +1,19 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+
 import ListGroup from 'react-bootstrap/ListGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import Alert from 'react-bootstrap/Alert';
 
-import { Alchemy, Network } from "alchemy-sdk";
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
+import { Alchemy, AssetTransfersCategory, Network } from "alchemy-sdk";
+
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+
+import moment from "moment";
 import { Col, Container, Row, Spinner } from "react-bootstrap";
 import {
     faUserCircle,
@@ -20,7 +27,8 @@ import {
     faQuestionCircle,
     faCopy,
     faInfoCircle,
-    faClock
+    faClock,
+    faExclamationCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -28,36 +36,86 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import Table from 'react-bootstrap/Table';
 
-const StripedRowExample = ({ data }) => {
+const StripedRowExample = ({ data, txType }) => {
+
+    const hexToDecimal = hex => parseInt(hex, 16);
 
     if (data.length === 0) {
         return <div>
-            Not yet fetched, please click on refresh button
+            <Spinner animation="border" style={{ fontSize: "1.25vw", color: "orange" }} />
+            <span style={ArrowText}>Transaction in progress, please wait</span>
         </div>
     }
 
-    const tableRows = data.transfers.map((x, i) => (
-        <tr key={i}>
-            <td>{x.metadata.blockTimestamp}</td>
-            <td>{x.hash.substring(0, 6)}</td>
-            <td>{x.blockNum}</td>
-            <td>{x.from.substring(0, 6)}</td>
-            <td>{x.to.substring(0, 6)}</td>
-            <td>{x.value} {x.asset}</td>
+    let tableHead, tableRows;
+
+    if (txType === "TX") {
+        tableHead = <tr>
+            <th>Age</th>
+            <th>Tx Hash</th>
+            <th>Block</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Value</th>
         </tr>
-    ))
+
+        tableRows = data.transfers.map((x, i) => (
+            <tr key={i}>
+                <td>{moment(x.metadata.blockTimestamp).fromNow()}</td>
+                <td>
+
+                    <a href={`https://etherscan.io/tx/${x.hash}`}>
+                        {x.hash.substring(0, 6)}
+                    </a>
+
+
+                </td>
+                <td>{x.blockNum}</td>
+                <td>{x.from.substring(0, 6)}</td>
+                <td>{x.to.substring(0, 6)}</td>
+                <td>{x.value.toFixed(3)} {x.asset}</td>
+            </tr>
+        ))
+    } else if (txType === "NFT") {
+        tableHead = <tr>
+            <th>Age</th>
+            <th>Tx Hash</th>
+            <th>Block</th>
+            <th>From</th>
+            <th>To</th>
+            <th>NFT Address</th>
+        </tr>
+
+        tableRows = data.transfers.map((x, i) => (
+            <tr key={i}>
+                <td>{moment(x.metadata.blockTimestamp).fromNow()}</td>
+                <td>
+
+                    <a href={`https://etherscan.io/tx/${x.hash}`}>
+                        {x.hash.substring(0, 6)}
+                    </a>
+
+                </td>
+                <td>{x.blockNum}</td>
+                <td>{x.from.substring(0, 6)}</td>
+                <td>{x.to.substring(0, 6)}</td>
+                <td>
+
+                    <a href={`https://opensea.io/assets/ethereum/${x.rawContract.address}/${ethers.BigNumber.from(x.tokenId)}`}>
+                        {x.rawContract.address.substring(0, 6)}
+                    </a>
+
+                </td>
+            </tr>
+        ))
+    } else {
+        throw 'bad tx type'
+    }
 
     return (
         <Table striped style={{ width: "100%" }}>
             <thead>
-                <tr>
-                    <th>Age</th>
-                    <th>Tx Hash</th>
-                    <th>Block</th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Value</th>
-                </tr>
+                {tableHead}
             </thead>
             <tbody>
                 {tableRows}
@@ -157,66 +215,76 @@ const BulletStyle = { "marginBottom": "0.5vw", "padding": "0" }
 
 function MainCard() {
 
-    const [transactionState, setTransactionState] = useState("COMPLETE")
+    const [TransactionState, SetTransactionState] = useState("READY");
 
-    const [EthAddress, SetEthAddress] = useState();
+    const [TxDirection, SetTxDirection] = useState("FROM");
 
-    const [TransactionList, SetTransactionList] = useState([])
+    const [TxType, SetTxType] = useState("TX");
 
+    const [EthAddress, SetEthAddress] = useState("0x912fD21d7a69678227fE6d08C64222Db41477bA0");
+
+    const [TransactionList, SetTransactionList] = useState([]);
+
+    const ResetDetails = () => {
+        SetTransactionState("READY");
+        SetTransactionList([])
+    }
 
     const resetTransaction = () => {
-        setTransactionState("PENDING");
+        SetTransactionState("PENDING");
+        SetTransactionList([])
 
         const alchemy = new Alchemy(config);
 
-        alchemy.core.getAssetTransfers({
+        let AssetTransfersConfig = {
+
             fromBlock: "0x0",
-            fromAddress: "0x912fD21d7a69678227fE6d08C64222Db41477bA0",
-            category: ["external", "internal"],
             order: "desc",
             maxCount: 25,
             withMetadata: true,
-        }).then((data) => {
 
-            console.log({ data });
+        }
+
+        if (TxDirection === "FROM") {
+            AssetTransfersConfig.fromAddress = EthAddress
+        } else if (TxDirection === "TO") {
+            AssetTransfersConfig.toAddress = EthAddress
+        } else {
+            throw "bad tx dir"
+        }
+
+        if (TxType === "TX") {
+            AssetTransfersConfig.category = ["external", "internal", "erc20"]
+        } else if (TxType === "NFT") {
+            AssetTransfersConfig.category = ["erc721"]
+        } else {
+            throw "bad tx type"
+        }
+
+        alchemy.core.getAssetTransfers(AssetTransfersConfig).then((data) => {
+
+            console.log({ data, TxType, TxDirection })
+
             SetTransactionList(data)
-            setTransactionState("COMPLETE");
+            SetTransactionState("COMPLETE");
 
         })
     }
 
     let progressBar;
-    if (transactionState === "PENDING") {
+    if (TransactionState === "PENDING") {
         progressBar = <ProgressBar variant="none" animated={true} now={50} />
-    } else if (transactionState === "COMPLETE") {
+    } else if (TransactionState === "COMPLETE") {
         progressBar = <ProgressBar variant="success" animated={false} now={100} />
     }
 
-    let transactionDetails;
-
-    if (transactionState === "PENDING") {
-        transactionDetails = <div style={BulletStyle}>
-            <Spinner animation="border" style={{ fontSize: "1.25vw", color: "orange" }} />
-            <span style={ArrowText}>Transaction in progress, please wait</span>
-        </div>
-    } else if (transactionState === "COMPLETE") {
-        transactionDetails = <div>
-            <div style={BulletStyle}>
-                <FontAwesomeIcon icon={faCircleCheck} style={{ fontSize: "1.25vw", color: "green" }} />
-                <span style={ArrowText}>Transaction completed successfully</span>
-            </div>
-            <div style={BulletStyle}>
-                <FontAwesomeIcon icon={faCoins} style={{ fontSize: "1.0vw" }} />
-                <span style={ArrowText}>Khaled sent 420.69 USDC to Elon</span>
-            </div>
-        </div>
-    }
-
     let redoButton;
-    if (transactionState === "COMPLETE") {
+    if (TransactionState === "COMPLETE" || TransactionState === "READY") {
         redoButton = <Button
             onClick={() => (resetTransaction())}
-            size="lg" variant="light" style={ButtonStyle} className="border border-0">
+            size="lg" variant="light" style={{
+                width: "10vw"
+            }} className="border border-0">
             <FontAwesomeIcon
                 style={{
                     marginRight: "0.25vw",
@@ -256,57 +324,183 @@ function MainCard() {
                 padding: 0,
                 margin: 0
             }}>
-                <Col className="col-4" style={CenterStyle}>
+                <Col className="col-4" style={{
+                    display: "flex"
+                }}>
                     <Accordion style={{ width: "100%" }} defaultActiveKey="0">
                         <Accordion.Item eventKey="0">
-                            <Accordion.Header>ETH Transactions</Accordion.Header>
+                            <Accordion.Header>Ethereum Transactions</Accordion.Header>
                             <Accordion.Body>
-                                <ListGroup as="ul" variant="flush">
-                                    <ListGroup.Item as="li" active>
-                                        From 0x912fD2
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">
-                                        From 0x912fD2
 
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">
-                                        From 0x912fD2
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">
-                                        From 0x912fD2
+                                <ButtonGroup size="lg" style={{
+                                    width: "100%", padding: "0", backgroundColor: "rgba(0,0,0,0.05)"
+                                }} vertical>
+                                    <Button variant="outline-dark"
 
-                                    </ListGroup.Item>
-                                </ListGroup>
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x912fD21d7a69678227fE6d08C64222Db41477bA0")
+                                            SetTxDirection("FROM")
+                                            SetTxType("TX")
+
+                                        }}>
+
+                                        Txs from 0x912fD2
+
+                                    </Button>
+
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x752cB5a80F6A702a865c9705f426731bB92a18D3")
+                                            SetTxDirection("FROM")
+                                            SetTxType("TX")
+
+                                        }}>
+
+                                        Txs from 0x752cB5
+
+                                    </Button>
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x912fD21d7a69678227fE6d08C64222Db41477bA0")
+                                            SetTxDirection("TO")
+                                            SetTxType("TX")
+
+                                        }}>
+
+                                        Txs to 0x912fD2
+
+                                    </Button>
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x752cB5a80F6A702a865c9705f426731bB92a18D3")
+                                            SetTxDirection("TO")
+                                            SetTxType("TX")
+
+                                        }}>
+
+                                        Txs to 0x752cB5
+
+                                    </Button>
+
+
+                                </ButtonGroup>
+
                             </Accordion.Body>
                         </Accordion.Item>
+
+
                         <Accordion.Item eventKey="2">
                             <Accordion.Header>ERC-20 Tokens</Accordion.Header>
                             <Accordion.Body>
-                                <ListGroup as="ul" variant="flush">
-                                    <ListGroup.Item as="li">
-                                        All Tokens owned by 0x912fD2
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item as="li">
-                                        Morbi leo risus
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
+
+
+
                             </Accordion.Body>
                         </Accordion.Item>
-                        <Accordion.Item eventKey="4">
+
+
+
+                        <Accordion.Item eventKey="3">
                             <Accordion.Header>ERC-721 NFTs</Accordion.Header>
                             <Accordion.Body>
-                                <ListGroup as="ul" variant="flush">
-                                    <ListGroup.Item as="li">
-                                        Cras justo odio
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Dapibus ac facilisis in</ListGroup.Item>
-                                    <ListGroup.Item as="li">
-                                        Morbi leo risus
-                                    </ListGroup.Item>
-                                    <ListGroup.Item as="li">Porta ac consectetur ac</ListGroup.Item>
-                                </ListGroup>
+
+                                <ButtonGroup size="lg" style={{
+                                    width: "100%", padding: "0", backgroundColor: "rgba(0,0,0,0.05)"
+                                }} vertical>
+
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0xb00154e628C7880cEdDF01c36888Fa9e6FD3ecb9")
+                                            SetTxDirection("TO")
+                                            SetTxType("NFT")
+
+                                        }}>
+
+                                        NFTs sent to 0xb00154
+
+                                    </Button>
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x17eF2B6Ff281dbb79847c9CBb2Ce62572Abb24C8")
+                                            SetTxDirection("TO")
+                                            SetTxType("NFT")
+
+                                        }}>
+
+                                        NFTs sent to 0x17eF2B
+
+                                    </Button>
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0xb00154e628C7880cEdDF01c36888Fa9e6FD3ecb9")
+                                            SetTxDirection("FROM")
+                                            SetTxType("NFT")
+
+                                        }}>
+
+                                        NFTs sent from 0xb00154
+
+                                    </Button>
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x17eF2B6Ff281dbb79847c9CBb2Ce62572Abb24C8")
+                                            SetTxDirection("FROM")
+                                            SetTxType("NFT")
+
+                                        }}>
+
+                                        NFTs sent from 0x17eF2B
+
+                                    </Button>
+
+
+
+                                    <Button variant="outline-dark"
+
+                                        onClick={() => {
+
+                                            ResetDetails();
+                                            SetEthAddress("0x4D4B61a639EAd8bebE50f067B062e940658233AD")
+                                            SetTxDirection("FROM")
+                                            SetTxType("NFT")
+
+                                        }}>
+
+                                        NFTs sent from 0x4D4B61
+
+                                    </Button>
+                                </ButtonGroup>
+
                             </Accordion.Body>
                         </Accordion.Item>
                     </Accordion>
@@ -315,13 +509,7 @@ function MainCard() {
 
                 <Col className="col-8" style={CenterStyle}>
 
-                    <div style={{
-                        width: "100%"
-                    }}>
-                        {progressBar}
-                    </div>
 
-                    <br />
 
 
 
@@ -332,8 +520,10 @@ function MainCard() {
                             className="d-flex justify-content-between align-items-start"
                         >
                             <div className="ms-2 me-auto">
-                                <div className="fw-bold">Address</div>
-                                0x912fD21d7a69678227fE6d08C64222Db41477bA0
+                                <div className="fw-bold">{TxDirection === "FROM" ? "Sending" : "Receiving"} Address</div>
+
+                                {EthAddress}
+
                             </div>
                             <Button
                                 size="lg" variant="light" style={ButtonStyle} className="border border-0">
@@ -347,39 +537,33 @@ function MainCard() {
                                     style={SingularHeaderSymbol} icon={faQuestionCircle} />
                             </Button>
                         </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Balance</div>
 
-                                27.107479912036621837 Ether
-                            </div>
-                            <Button
-                                size="lg" variant="light" style={ButtonStyle} className="border border-0">
-                                <FontAwesomeIcon
-                                    style={SingularHeaderSymbol} icon={faQuestionCircle} />
-                            </Button>
-                        </ListGroup.Item>
-                        <ListGroup.Item
-                            as="li"
-                            className="d-flex justify-content-between align-items-start"
-                        >
-                            <div className="ms-2 me-auto">
-                                <div className="fw-bold">Transaction Count</div>
-                                1,522,704
-                            </div>
-                            <Button
-                                size="lg" variant="light" style={ButtonStyle} className="border border-0">
-                                <FontAwesomeIcon
-                                    style={SingularHeaderSymbol} icon={faQuestionCircle} />
-                            </Button>
-                        </ListGroup.Item>
+
+
+
                     </ListGroup>
                     <br />
 
+                    <div style={{
+                        width: "100%"
+                    }}>
+                        {progressBar}
+                    </div>
 
+                    <br />
+
+                    {
+
+                        TransactionState !== "PENDING" ?
+                            <div>
+                                {redoButton}
+                            </div> : null
+
+
+
+                    }
+
+                    <br />
 
                     <div style={{
 
@@ -393,17 +577,45 @@ function MainCard() {
 
                     }}>
 
-                        <Alert variant="info">
-                            <FontAwesomeIcon style={InfoHeaderSymbol} icon={faInfoCircle} />
-                            Shown below: latest 25 txs from a total of 1.5M txs
-                        </Alert>
+                        {
 
-                        <StripedRowExample data={TransactionList} />
+                            TransactionState === "READY" ?
+
+                                <div>
+                                    <Alert variant="warning">
+                                        <FontAwesomeIcon style={InfoHeaderSymbol} icon={faExclamationCircle} />
+                                        Click the refresh button above to load transaction history
+                                    </Alert>
+
+                                </div>
+
+                                :
+
+                                <div>
+                                    <Alert variant="success">
+                                        <FontAwesomeIcon style={InfoHeaderSymbol} icon={faCircleCheck} />
+
+                                        Latest 25 <b>{
+                                            TxType === "NFT" ? "NFT" : "token"
+                                        }</b> transactions <b>{
+                                            TxDirection === "FROM" ? "sent from" : "recieved by"
+                                        }</b> the address shown above
+
+                                    </Alert>
+
+                                    <StripedRowExample data={TransactionList} txType={TxType} /> </div>
+
+                        }
+
+                        <br />
+
+
+
+
+
                     </div>
                     <br />
-                    <div>
-                        {redoButton}
-                    </div>
+
 
 
                 </Col>

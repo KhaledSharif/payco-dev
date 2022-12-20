@@ -9,7 +9,7 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-body .btn {
+.header .btn {
 background-color:  rgba(255, 255, 255, 0.85);
 }
 
@@ -18,7 +18,7 @@ img.clickable {
 }
 
 body .btn:hover {
-  background-color: rgba(255,255,255,0.95);
+  /* background-color: rgba(255,255,255,0.95); */
 }
 
 .steps .btn {
