@@ -10,6 +10,63 @@ body::-webkit-scrollbar {
 }
 
 
+.row .table-dark th {
+  background-color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.85)
+
+}
+
+
+.row .table-dark td {
+  background-color: rgba(255,255,255,0.1);
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+}
+
+.row .table-dark a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.row .table-striped tbody tr:nth-of-type(odd)>* {
+  background-color: rgba(255,255,255,0.2);
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+
+  --bs-table-accent-bg: unset;
+}
+
+.row > button {
+  background-color: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.0vw;
+}
+
+.list-group > li {
+  background-color: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.85)
+}
+
+.row > .dropdown > button {
+  background-color: rgba(255,255,255,0.1);
+  border: none;
+  font-size: 1.0vw;
+  color: rgba(255, 255, 255, 0.85);
+
+}
+
+.row .alert-success {
+  background-color: rgba(255,255,255,0.1);
+  color: rgba(255, 255, 255, 0.85);
+  border: none
+}
+
+.row .alert {
+  background-color: rgba(255,255,255,0.1);
+  color: rgba(255, 255, 255, 0.85);
+  border: none
+}
 
 img.clickable {
   cursor: pointer;

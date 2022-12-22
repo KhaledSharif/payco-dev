@@ -30,6 +30,7 @@ import {
   faInfoCircle,
   faClock,
   faExclamationCircle,
+  faChevronCircleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useContext } from "react";
@@ -124,7 +125,7 @@ const StripedRowExample = ({ data, txType, txNetwork }) => {
   }
 
   return (
-    <Table striped bordered hover variant="dark" style={{ width: "100%" }}>
+    <Table striped variant="dark" style={{ width: "100%" }}>
       <thead>{tableHead}</thead>
       <tbody>{tableRows}</tbody>
     </Table>
@@ -189,6 +190,7 @@ const PaymentStyle = {
 const ArrowText = {
   marginLeft: "0.55vw",
   fontSize: "0.75vw",
+  color: "white"
 };
 const MainBulletPoints = {
   marginTop: "2.0vw",
@@ -252,18 +254,7 @@ function MainCard() {
     SetTransactionList([]);
   };
 
-  const LoginWithMetamask = () => {
-    // A Web3Provider wraps a standard Web3 provider, which is
-    // what MetaMask injects as window.ethereum into each page
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-    provider.send("eth_requestAccounts", []).then(() => {
-      const signer = provider.getSigner();
-      signer.getAddress().then((address) => {
-        setEthAddress(address);
-      });
-    });
-  };
+  
 
   const resetTransaction = () => {
     SetTransactionState("PENDING");
@@ -334,7 +325,7 @@ function MainCard() {
 
   let dropdownButton = (
     <DropdownButton
-      style={{ width: "10vw" }}
+      style={{ width: "unset" }}
       title={`Network: ${networkNaming[TxNetwork]}`}
     >
       <Dropdown.Item
@@ -566,14 +557,14 @@ function MainCard() {
                 gap: "1vh",
                 flexDirection: "row",
                 width: "100%",
-                justifyContent:"center"
+                justifyContent: "right",
               }}
             >
               {redoButton}
 
               {dropdownButton}
 
-              {ethAddress ? (
+              {/* {ethAddress ? (
                 <Button
                   style={{ width: "15vw" }}
                   onClick={() => setEthAddress(null)}
@@ -587,12 +578,20 @@ function MainCard() {
                 >
                   Login with Metamask
                 </Button>
-              )}
+              )} */}
             </Row>
 
-                <br/>
+            <br />
 
-            <Row>
+            <Row
+              style={{
+                display: "flex",
+                gap: "1vh",
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
               <ListGroup style={{ width: "100%" }} as="ol">
                 <ListGroup.Item
                   as="li"
@@ -631,7 +630,15 @@ function MainCard() {
 
             <br />
 
-            <Row>
+            <Row
+              style={{
+                display: "flex",
+                gap: "1vh",
+                flexDirection: "row",
+                width: "100%",
+                justifyContent: "center",
+              }}
+            >
               <div
                 style={{
                   width: "100%",
@@ -658,14 +665,12 @@ function MainCard() {
                     <Alert variant="success">
                       <FontAwesomeIcon
                         style={InfoHeaderSymbol}
-                        icon={faCircleCheck}
+                        icon={faChevronCircleDown}
                       />
-                      Latest 25 <b>{TxType === "NFT" ? "NFT" : "token"}</b>{" "}
-                      transactions{" "}
-                      <b>
-                        {TxDirection === "FROM" ? "sent from" : "recieved by"}
-                      </b>{" "}
-                      the address shown above
+                      Shown below: latest 25{" "}
+                      {TxType === "NFT" ? "NFT" : "token"} transactions{" "}
+                      {TxDirection === "FROM" ? "sent from" : "recieved by"} the
+                      address shown above
                     </Alert>
                     <StripedRowExample
                       data={TransactionList}

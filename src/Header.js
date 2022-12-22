@@ -1,6 +1,7 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
+import { ethers } from "ethers";
 
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -43,7 +44,24 @@ const ButtonStyle = {
 };
 
 function Header() {
-  const { setLayout, ethAddress } = useContext(AppContext);
+
+ 
+
+
+  const { setLayout, ethAddress,  setEthAddress} = useContext(AppContext);
+
+  const LoginWithMetamask = () => {
+    // A Web3Provider wraps a standard Web3 provider, which is
+    // what MetaMask injects as window.ethereum into each page
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+    provider.send("eth_requestAccounts", []).then(() => {
+      const signer = provider.getSigner();
+      signer.getAddress().then((address) => {
+        setEthAddress(address);
+      });
+    });
+  };
 
   return (
     <Container
@@ -221,6 +239,7 @@ function Header() {
               </Button>
             ) : (
               <Button
+              onClick={()=>(LoginWithMetamask())}
                 size="lg"
                 variant="light"
                 style={ButtonStyle}

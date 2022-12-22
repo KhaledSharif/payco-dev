@@ -372,7 +372,7 @@ function MainCard() {
                 className="border border-0"
               >
                 <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faCube} />
-                Lamborghini Aventador
+                Terrarium Bots
               </Button>
 
               <Button
