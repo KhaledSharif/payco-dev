@@ -4,10 +4,11 @@ import Button from "react-bootstrap/Button";
 import ListGroup from 'react-bootstrap/ListGroup';
 import Accordion from 'react-bootstrap/Accordion';
 import Alert from 'react-bootstrap/Alert';
+import { AppContext } from "./Context";
 
 import { ethers } from 'ethers';
 
-import { Alchemy, AssetTransfersCategory, Network } from "alchemy-sdk";
+import { Alchemy, Network } from "alchemy-sdk";
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -31,7 +32,7 @@ import {
     faExclamationCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import Table from 'react-bootstrap/Table';
@@ -116,7 +117,7 @@ const StripedRowExample = ({ data, txType, txNetwork }) => {
     }
 
     return (
-        <Table striped style={{ width: "100%" }}>
+        <Table striped bordered hover variant="dark" style={{ width: "100%" }}>
             <thead>
                 {tableHead}
             </thead>
@@ -215,6 +216,8 @@ const BulletStyle = { "marginBottom": "0.5vw", "padding": "0" }
 
 function MainCard() {
 
+    const { ethAddress, setEthAddress } = useContext(AppContext);
+
     const [TransactionState, SetTransactionState] = useState("READY");
 
     const [TxDirection, SetTxDirection] = useState("FROM");
@@ -240,6 +243,20 @@ function MainCard() {
     const ResetDetails = () => {
         SetTransactionState("READY");
         SetTransactionList([])
+    }
+
+    const LoginWithMetamask = () => {
+        // A Web3Provider wraps a standard Web3 provider, which is
+        // what MetaMask injects as window.ethereum into each page
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+        provider.send("eth_requestAccounts", []).then(() => {
+            const signer = provider.getSigner();
+            signer.getAddress().then((address) => {
+                setEthAddress(address)
+            })
+        })
+
     }
 
     const resetTransaction = () => {
@@ -301,7 +318,6 @@ function MainCard() {
         disabled={TransactionState === "PENDING"}
         onClick={() => (resetTransaction())}
         size="lg" variant="light" style={{
-            width: "10vw"
         }} className="border border-0">
         <FontAwesomeIcon
             style={{
@@ -316,7 +332,7 @@ function MainCard() {
 
         <Card
             style={{
-                backgroundColor: "rgba(255,255,255,0.875)",
+                backgroundColor: "rgba(0,0,20,0.5)",
 
 
 
@@ -350,7 +366,6 @@ function MainCard() {
 
 
                     <DropdownButton size="lg" variant="light" style={{
-                        width: "10vw"
                     }} className="border border-0" id="dropdown-basic-button" title={`Network: ${networkNaming[TxNetwork]}`}>
                         <Dropdown.Item
 
@@ -376,23 +391,43 @@ function MainCard() {
                         >Polygon</Dropdown.Item>
                     </DropdownButton>
 
+                    {
+
+                        ethAddress ? <Button size="lg" variant="light" className="border border-0"
+
+                            onClick={
+                                () => (setEthAddress(null))
+                            }
+                        >
+                            Logged in as {ethAddress.substring(0,6)}
+                        </Button> : <Button size="lg" variant="light" className="border border-0"
+
+                            onClick={
+                                () => (LoginWithMetamask())
+                            }
+                        >
+                            Login with Metamask
+                        </Button>
+
+                    }
+
 
 
                 </div>
 
-                </Row>
+            </Row>
 
-                <br/>
+            <br />
 
-                <Row>
+            <Row>
 
                 <div style={{
-                        width: "100%"
-                    }}>
-                        {progressBar}
-                    </div>
+                    width: "100%"
+                }}>
+                    {progressBar}
+                </div>
             </Row>
-            <br/>
+            <br />
 
             <Row style={{
                 minHeight: "35vh",
@@ -591,8 +626,8 @@ function MainCard() {
 
 
 
-                    <ListGroup style={{ width: "100%" }} as="ol">
-                        <ListGroup.Item
+                    <ListGroup  style={{ width: "100%" }} as="ol">
+                        <ListGroup.Item 
                             as="li"
                             className="d-flex justify-content-between align-items-start"
                         >
@@ -603,13 +638,13 @@ function MainCard() {
 
                             </div>
                             <Button
-                                size="lg" variant="light" style={ButtonStyle} className="border border-0">
+                                size="lg" style={ButtonStyle} className="border border-0">
                                 <FontAwesomeIcon
                                     style={SingularHeaderSymbol} icon={faCopy} />
 
                             </Button>
                             <Button
-                                size="lg" variant="light" style={ButtonStyle} className="border border-0">
+                                size="lg" style={ButtonStyle} className="border border-0">
                                 <FontAwesomeIcon
                                     style={SingularHeaderSymbol} icon={faQuestionCircle} />
                             </Button>
@@ -625,7 +660,7 @@ function MainCard() {
                     <div style={{
 
                         width: "100%",
-                        backgroundColor: "rgba(255,255,255,0.75)",
+                        backgroundColor: "rgba(0,0,20,0.5)",
                         paddingTop: "2%",
                         paddingBottom: "2%",
                         paddingLeft: "1.0vw",

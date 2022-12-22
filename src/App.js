@@ -8,11 +8,14 @@ function App() {
 
 
     const [layout, setLayout] = useState("HOME")
+    const [ethAddress, setEthAddress] = useState(null)
 
     return (
         <AppContext.Provider value={{
             layout,
-            setLayout
+            setLayout,
+            ethAddress,
+            setEthAddress,
         }}>
             <Layout className="App" />
         </AppContext.Provider>

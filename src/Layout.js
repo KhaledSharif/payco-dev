@@ -4,14 +4,13 @@ import Steps from "./Steps"
 import MainCard from "./MainCard";
 import Storefront from "./Storefront";
 import SecondaryCard from "./SecondaryCard";
-
 import { AppContext } from "./Context";
 import BusinessInfoCard from "./BusinessInfoCard";
 import { Container, Col, Row } from "react-bootstrap";
 import IndividualInfoCard from "./IndividualInfoCard";
 import EtherscanCard from "./EtherscanCard";
 import EthersCard from "./EthersCard";
-
+import ImageEditor from "./ImageEditor";
 import VideoEditor from "./VideoEditor";
 import POS from "./POS";
 
@@ -55,6 +54,9 @@ function Layout() {
 
     } else if (layout === "VIDEO-EDITOR") {
         layoutInternals = <VideoEditor />
+
+    } else if (layout === "IMAGE-EDITOR") {
+        layoutInternals = <ImageEditor />
 
     } else if (layout === "POS") {
         layoutInternals =

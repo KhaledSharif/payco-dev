@@ -24,9 +24,10 @@ import {
   faHeart,
   faCartShopping,
   faFilm,
+  faComment,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Video1 from "./mp4/anna.mp4";
+import Video1 from "./mp4/wl.mp4";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -403,7 +404,7 @@ function MainCard() {
                 className="border border-0"
               >
                 <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faFilm} />
-                Christian Dior Collection
+                White Lotus: Behind the Scenes
               </Button>
 
               <Button
@@ -413,7 +414,7 @@ function MainCard() {
                 className="border border-0"
               >
                 <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faUser} />
-                dior.eth
+                HBO
               </Button>
             </div>
 
@@ -437,11 +438,22 @@ function MainCard() {
                 <FontAwesomeIcon style={SingularHeaderSymbol} icon={faHeart} />
               </Button>
 
+              <Button
+                size="lg"
+                variant="light"
+                style={ButtonStyle}
+                className="border border-0"
+              >
+                <FontAwesomeIcon
+                  style={SingularHeaderSymbol}
+                  icon={faComment}
+                />
+              </Button>
 
               <Button
                 size="lg"
                 variant="light"
-                style={{...ButtonStyle, width: "8vw", display: "flex"}}
+                style={{...ButtonStyle, width: "10vw", display: "flex"}}
                 className="border border-0"
               >
                 <div style={{
@@ -453,7 +465,7 @@ function MainCard() {
                 <div
                 
                 style={{
-                    width: "4vw"
+                    width: "6vw"
                 }}
                 
                 >
