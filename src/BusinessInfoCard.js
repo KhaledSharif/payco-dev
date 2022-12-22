@@ -23,7 +23,6 @@ const MainBulletPoints = {
 }
 const CenterStyle = { "display": "flex", "flexDirection": "row", "gap": "3.5vh", "alignItems": "center", "justifyContent": "center", "paddingBottom": "100vh" }
 const CommonCardStyle = {
-    height: "82vh",
     width: "90%",
     backgroundColor: "rgba(255,255,255,0.875)",
     marginTop: "0", marginBottom: "0",
@@ -49,7 +48,9 @@ function MainCard() {
             style={CommonCardStyle}
             className="border border-0"
         >
-            <Row>
+            <Row style={{
+                maxHeight: "82vh"
+            }}>
                 
                 <Col style={{ "display": "flex", "justifyContent": "center", "alignItems": "center", "maxWidth": "30%" }}>
                     <div style={{ "width": "70%" }}>
@@ -79,7 +80,7 @@ function MainCard() {
                     </div>
                 </Col>
 
-                <Col className="col-8">
+                <Col>
                     <img src={Image1} style={{ width: "106%" }} />
                 </Col>
 
@@ -93,7 +94,7 @@ function MainCard() {
         >
             <Row>
                 
-                <Col className="col-4" style={{ "display": "flex", "justifyContent": "center", "alignItems": "center" }}>
+                <Col style={{ "display": "flex", "justifyContent": "center", "alignItems": "center" }}>
                     <div style={{ "width": "70%" }}>
 
                         <div>

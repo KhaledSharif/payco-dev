@@ -11,7 +11,8 @@ import GooglePlay from "./jpg/google-play.png";
 
 const ArrowText = {
     "marginLeft": "1.1vw",
-    "fontSize": "1.05vw"
+    "fontSize": "1.05vw",
+    color:"rgba(255,255,255,0.85)"
 }
 const MainBulletPoints = {
     "marginTop": "2.0vw",
@@ -20,14 +21,15 @@ const MainBulletPoints = {
     "flexDirection": "column"
 }
 
-const BulletStyle = { "marginBottom": "0.2vw", "padding": "0" }
+    
+const BulletStyle = { "marginBottom": "0.2vw", "padding": "0" , color:"rgba(255,255,255,0.85)"}
 
 function MainCard() {
 
     let MainCardHeading;
 
 
-    MainCardHeading = <p style={{"fontSize": "1.75vw", "lineHeight": "4.25vh"}}>
+    MainCardHeading = <p style={{"fontSize": "1.75vw", "lineHeight": "4.25vh", color: "rgba(255,255,255,0.8)"}}>
         Get the simplest way to store, send, and receieve digital money
     </p>
 
@@ -36,7 +38,7 @@ function MainCard() {
 
         <Card
             style={{
-                backgroundColor: "rgba(255,255,255,0.875)",
+                backgroundColor: "rgba(0,0,20,0.875)",
                 marginTop: "4.0vh", marginBottom: "1.0vh",
                 borderRadius: "1.0vw",
                 overflow: "hidden"

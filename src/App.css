@@ -17,10 +17,6 @@ img.clickable {
   cursor: pointer;
 }
 
-body .btn:hover {
-  /* background-color: rgba(255,255,255,0.95); */
-}
-
 .steps .btn {
   background-color:  rgba(255, 255, 255, 0.75);
 }
@@ -31,19 +27,25 @@ body .btn:hover {
 
 .header .btn {
   font-weight: 400;
-  color: rgba(0,0,0,0.85)
+  color: rgba(255,255,255,0.85);
+  background-color: rgba(255,255,255,0.35);
+
 }
 
-.header .btn:active {
-  background-color: rgba(255,255,255,0.95);
+.header .btn:hover {
+  background-color: rgba(255,255,255,0.475);
 }
 
-.header .btn:visted {
-  background-color: rgba(255,255,255,0.95);
-}
+/* .header .btn:active {
+  background-color: rgba(255,255,255,0.55);
+} */
+
+/* .header .btn:visted {
+  background-color: rgba(255,255,255,0.55);
+} */
 
 .header .btn:focus {
-  background-color: rgba(255,255,255,0.95);
+  background-color: rgba(255,255,255,0.525);
 }
 
 .App-logo {

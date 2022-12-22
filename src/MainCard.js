@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 
 const ArrowText = {
     "marginLeft": "1.1vw",
-    "fontSize": "1.05vw"
+    "fontSize": "1.05vw",
+    "color": "rgba(255,255,255,0.85)"
 }
 const MainBulletPoints = {
     "marginTop": "2.0vw",
@@ -25,7 +26,7 @@ function MainCard() {
     let MainCardHeading;
 
 
-    MainCardHeading = <p style={{ "fontSize": "1.55vw", "lineHeight": "2.0vw" }}>
+    MainCardHeading = <p style={{ "fontSize": "1.55vw", "lineHeight": "2.0vw", "color": "rgba(255,255,255,0.85)" }}>
         Pay and get paid faster when you use Payco,
         the payment platform of the future
     </p>
@@ -35,7 +36,7 @@ function MainCard() {
 
         <Card
             style={{
-                backgroundColor: "rgba(255,255,255,0.875)",
+                backgroundColor: "rgba(0,0,20,0.875)",
                 marginTop: "0", marginBottom: "0vh",
                 borderRadius: "1.0vw",
                 overflow: "hidden",
@@ -54,17 +55,17 @@ function MainCard() {
                         <div style={MainBulletPoints}>
 
                             <div style={BulletStyle}>
-                                <FontAwesomeIcon icon={faCircleCheck} style={{ fontSize: "1.25vw" }} />
+                                <FontAwesomeIcon icon={faCircleCheck} style={{ fontSize: "1.25vw", color: "rgba(255,255,255,0.75)" }} />
                                 <span style={ArrowText}>Lower fees than anywhere else</span>
                             </div>
 
                             <div style={BulletStyle}>
-                                <FontAwesomeIcon icon={faLock} style={{ fontSize: "1.35vw" }} />
+                                <FontAwesomeIcon icon={faLock} style={{ fontSize: "1.35vw", color: "rgba(255,255,255,0.75)" }}  />
                                 <span style={ArrowText}>More secure than a bank</span>
                             </div>
 
                             <div style={BulletStyle}>
-                                <FontAwesomeIcon icon={faScaleBalanced} style={{ fontSize: "1.0vw" }} />
+                                <FontAwesomeIcon icon={faScaleBalanced} style={{ fontSize: "1.0vw", color: "rgba(255,255,255,0.75)" }} />
                                 <span style={ArrowText}>Protected by Swiss law</span>
                             </div>
 

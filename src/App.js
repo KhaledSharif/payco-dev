@@ -7,7 +7,7 @@ import {AppContext} from "./Context";
 function App() {
 
 
-    const [layout, setLayout] = useState("BUSINESSES")
+    const [layout, setLayout] = useState("HOME")
 
     return (
         <AppContext.Provider value={{

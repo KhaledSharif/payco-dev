@@ -35,7 +35,7 @@ const ArrowHeaderIcon = {
 const ArrowHeaderSymbol = {
     "marginLeft": "1.0vw",
     "fontSize": "1.0vw",
-    "color": "rgba(0,0,0,0.25)"
+    "color": "rgba(255,255,255,0.9)",
 }
 const ArrowText = {
     "fontSize": "1.25vw",
@@ -45,7 +45,7 @@ const ArrowText = {
 }
 
 const SubArrowText = {
-    "color": "rgba(0,0,0,0.85)",
+    "color": "rgba(255,255,255,0.85)",
     "padding": "0.25vw 2.5vw 1.25vw 2.5vw",
     "fontSize": "0.75vw",
     "justifyContent": "center",
@@ -53,7 +53,7 @@ const SubArrowText = {
     "textAlign": "center"
 }
 const MainBulletPoints = {
-    "color": "rgba(0,0,0,0.95)",
+    "color": "rgba(255,255,255,0.85)",
     "marginTop": "2.0vw",
     "padding": "1.0vw 1.0vw 1.0vw 1.0vw",
     "display": "flex",
@@ -90,7 +90,8 @@ const ArrowHeaderStyle = {
 
 
     "borderRadius": "1.0vw",
-    "color": "rgba(0,0,0,0.9)",
+    "color": "rgba(255,255,255,0.9)",
+    backgroundColor: "rgba(9, 15, 51,0.5)",
     "border": "none",
     "padding": "0.75vw",
     "width": "100%",
@@ -102,7 +103,7 @@ const ArrowHeaderStyle = {
     "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.01), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.05)"
 }
 
-const CommonStyle = { backgroundColor: "rgba(255,255,255,0.875)", borderRadius: "0.85vw", paddingLeft: "1.0vw", paddingRight: "1.0vw", paddingTop: "2.0vh" }
+const CommonStyle = { backgroundColor: "rgba(0,0,20,0.875)", borderRadius: "0.85vw", paddingLeft: "1.0vw", paddingRight: "1.0vw", paddingTop: "2.0vh" }
 
 function GroupExample() {
     const { setLayout } = useContext(AppContext);

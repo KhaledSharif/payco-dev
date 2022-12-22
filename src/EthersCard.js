@@ -36,9 +36,12 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import Table from 'react-bootstrap/Table';
 
-const StripedRowExample = ({ data, txType }) => {
+const StripedRowExample = ({ data, txType, txNetwork }) => {
 
-    const hexToDecimal = hex => parseInt(hex, 16);
+    const networkScanner = {
+        "ETH": "https://etherscan.io",
+        "POLY": "https://polygonscan.com"
+    }
 
     if (data.length === 0) {
         return <div>
@@ -64,7 +67,7 @@ const StripedRowExample = ({ data, txType }) => {
                 <td>{moment(x.metadata.blockTimestamp).fromNow()}</td>
                 <td>
 
-                    <a href={`https://etherscan.io/tx/${x.hash}`}>
+                    <a href={`${networkScanner[txNetwork]}/tx/${x.hash}`}>
                         {x.hash.substring(0, 6)}
                     </a>
 
@@ -124,10 +127,7 @@ const StripedRowExample = ({ data, txType }) => {
     );
 }
 
-const config = {
-    apiKey: "c4d_elwERy9uvEdZJGx8Q3bSGfqgfy3_",
-    network: Network.ETH_MAINNET,
-};
+
 
 const SingularHeaderSymbol = {
     "margin": "0",
@@ -221,9 +221,21 @@ function MainCard() {
 
     const [TxType, SetTxType] = useState("TX");
 
+    const [TxNetwork, SetTxNetwork] = useState("ETH");
+
     const [EthAddress, SetEthAddress] = useState("0x912fD21d7a69678227fE6d08C64222Db41477bA0");
 
     const [TransactionList, SetTransactionList] = useState([]);
+
+    const networkNaming = {
+        "ETH": "Ethereum",
+        "POLY": "Polygon"
+    }
+
+    const networkMapping = {
+        "ETH": Network.ETH_MAINNET,
+        "POLY": Network.MATIC_MAINNET
+    }
 
     const ResetDetails = () => {
         SetTransactionState("READY");
@@ -233,6 +245,13 @@ function MainCard() {
     const resetTransaction = () => {
         SetTransactionState("PENDING");
         SetTransactionList([])
+
+
+
+        const config = {
+            apiKey: "c4d_elwERy9uvEdZJGx8Q3bSGfqgfy3_",
+            network: networkMapping[TxNetwork],
+        };
 
         const alchemy = new Alchemy(config);
 
@@ -263,7 +282,7 @@ function MainCard() {
 
         alchemy.core.getAssetTransfers(AssetTransfersConfig).then((data) => {
 
-            console.log({ data, TxType, TxDirection })
+            console.log({ data, TxType, TxDirection, TxNetwork })
 
             SetTransactionList(data)
             SetTransactionState("COMPLETE");
@@ -278,20 +297,19 @@ function MainCard() {
         progressBar = <ProgressBar variant="success" animated={false} now={100} />
     }
 
-    let redoButton;
-    if (TransactionState === "COMPLETE" || TransactionState === "READY") {
-        redoButton = <Button
-            onClick={() => (resetTransaction())}
-            size="lg" variant="light" style={{
-                width: "10vw"
-            }} className="border border-0">
-            <FontAwesomeIcon
-                style={{
-                    marginRight: "0.25vw",
+    let redoButton = <Button
+        disabled={TransactionState === "PENDING"}
+        onClick={() => (resetTransaction())}
+        size="lg" variant="light" style={{
+            width: "10vw"
+        }} className="border border-0">
+        <FontAwesomeIcon
+            style={{
+                marginRight: "0.25vw",
 
-                }} icon={faRotateLeft} />
-            Refresh </Button>
-    }
+            }} icon={faRotateLeft} />
+        Refresh </Button>
+
 
 
     return <div style={CenterStyle}>
@@ -318,6 +336,63 @@ function MainCard() {
             }}
             className="border border-0"
         >
+            <Row>
+                <div style={{
+
+                    display: "flex",
+                    gap: "1.0vw"
+
+                }}>
+
+
+                    {redoButton}
+
+
+
+                    <DropdownButton size="lg" variant="light" style={{
+                        width: "10vw"
+                    }} className="border border-0" id="dropdown-basic-button" title={`Network: ${networkNaming[TxNetwork]}`}>
+                        <Dropdown.Item
+
+                            as="button"
+                            onClick={
+                                () => {
+                                    ResetDetails();
+                                    SetTxNetwork("ETH");
+                                }
+                            }
+
+                        >Ethereum</Dropdown.Item>
+                        <Dropdown.Item
+
+                            as="button"
+                            onClick={
+                                () => {
+                                    ResetDetails();
+                                    SetTxNetwork("POLY");
+                                }
+                            }
+
+                        >Polygon</Dropdown.Item>
+                    </DropdownButton>
+
+
+
+                </div>
+
+                </Row>
+
+                <br/>
+
+                <Row>
+
+                <div style={{
+                        width: "100%"
+                    }}>
+                        {progressBar}
+                    </div>
+            </Row>
+            <br/>
 
             <Row style={{
                 minHeight: "35vh",
@@ -356,13 +431,13 @@ function MainCard() {
                                         onClick={() => {
 
                                             ResetDetails();
-                                            SetEthAddress("0x752cB5a80F6A702a865c9705f426731bB92a18D3")
+                                            SetEthAddress("0xe2Db77D7a6417e84395A2A74276564638077B779")
                                             SetTxDirection("FROM")
                                             SetTxType("TX")
 
                                         }}>
 
-                                        Txs from 0x752cB5
+                                        Txs from 0xe2Db77
 
                                     </Button>
 
@@ -514,6 +589,8 @@ function MainCard() {
 
 
 
+
+
                     <ListGroup style={{ width: "100%" }} as="ol">
                         <ListGroup.Item
                             as="li"
@@ -542,26 +619,6 @@ function MainCard() {
 
 
                     </ListGroup>
-                    <br />
-
-                    <div style={{
-                        width: "100%"
-                    }}>
-                        {progressBar}
-                    </div>
-
-                    <br />
-
-                    {
-
-                        TransactionState !== "PENDING" ?
-                            <div>
-                                {redoButton}
-                            </div> : null
-
-
-
-                    }
 
                     <br />
 
@@ -603,7 +660,7 @@ function MainCard() {
 
                                     </Alert>
 
-                                    <StripedRowExample data={TransactionList} txType={TxType} /> </div>
+                                    <StripedRowExample data={TransactionList} txType={TxType} txNetwork={TxNetwork} /> </div>
 
                         }
 

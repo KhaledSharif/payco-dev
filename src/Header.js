@@ -25,18 +25,16 @@ import SmallLogo from "./jpg/smol-logo.png"
 const ArrowHeaderSymbol = {
     "marginLeft": "0.3vw",
     "fontSize": "0.8vw",
-    "color": "rgba(0,0,0,0.25)"
+    "color": "rgba(255,255,255,0.65)"
 }
 
 const SingularHeaderSymbol = {
     "margin": "0",
     "fontSize": "0.8vw",
-    "color": "rgba(0,0,0,0.25)"
+    "color": "rgba(255,255,255,0.65)"
 }
 
 const ButtonStyle = {
-    "zIndex": 10,
-
     "fontSize": "0.9vw",
     "borderRadius": "1.0vw",
     "padding": "0.4vw 0.8vw 0.4vw 0.8vw",
@@ -74,15 +72,33 @@ function Header() {
                             <FontAwesomeIcon
                                 style={SingularHeaderSymbol} icon={faMagnifyingGlass} />
                         </Button>
-                        <Button size="lg" variant="light" style={ButtonStyle} className="border border-0"
+                        <Button size="lg" variant="light" style={{
+
+                            "fontSize": "0.9vw",
+                            "borderRadius": "1.0vw",
+                            "padding": "0.4vw 0.8vw 0.4vw 0.8vw",
+                            "boxShadow": "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)"
+                        }} className="border border-0"
                             onClick={() => (setLayout("HOME"))}>
 
-                            <img src={SmallLogo} style={{
-                                width: "1.35vw",
-                                marginRight: "0.55vw"
-                            }} />
+                            <div style={{
+                                display: "flex",
 
-                            Payco
+                            }}>
+
+                                <img src={SmallLogo} style={{
+                                    height: "40px",
+                                    marginRight: "0.55vw"
+                                }} />
+                                <p style={{
+                                    fontSize: "1.0vw",
+                                    fontWeight: "500",
+                                    color: "rgba(255,255,255,0.75)",
+                                    padding: "0", margin: 0
+                                }}>
+                                    Payco
+                                </p>
+                            </div>
 
                         </Button>
 
@@ -97,13 +113,13 @@ function Header() {
                             className="border border-0">EN <FontAwesomeIcon
                                 style={ArrowHeaderSymbol} icon={faCircleChevronDown} /></Button>
 
-                    <Button onClick={() => (setLayout("VIDEO-EDITOR"))}
+                        <Button onClick={() => (setLayout("VIDEO-EDITOR"))}
                             size="lg" variant="light" style={ButtonStyle} className="border border-0">
                             <FontAwesomeIcon
                                 style={SingularHeaderSymbol} icon={faVideo} />
                         </Button>
 
-<Button onClick={() => (setLayout("STORE-FRONT"))}
+                        <Button onClick={() => (setLayout("STORE-FRONT"))}
                             size="lg" variant="light" style={ButtonStyle} className="border border-0">
                             <FontAwesomeIcon
                                 style={SingularHeaderSymbol} icon={faUserAstronaut} />
