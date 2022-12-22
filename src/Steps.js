@@ -105,7 +105,7 @@ const ArrowHeaderStyle = {
 
 const CommonStyle = {
   backgroundColor: "rgba(0,0,20,0.5)",
-  borderRadius: "0.85vw",
+  borderRadius: "0.95vw",
   paddingLeft: "1.0vw",
   paddingRight: "1.0vw",
   paddingTop: "2.0vh",

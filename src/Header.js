@@ -37,7 +37,7 @@ const SingularHeaderSymbol = {
 const ButtonStyle = {
   fontSize: "0.9vw",
   borderRadius: "1.0vw",
-  padding: "0 0.8vw 0 0.8vw",
+  padding: "0 1vw 0 1vw",
   boxShadow:
     "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)",
 };
@@ -89,7 +89,7 @@ function Header() {
               style={{
                 fontSize: "0.9vw",
                 borderRadius: "1.0vw",
-                padding: "0.4vw 0.8vw 0.4vw 0.8vw",
+                // padding: "0.4vw 0.8vw 0.4vw 0.8vw",
                 boxShadow:
                   "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)",
               }}

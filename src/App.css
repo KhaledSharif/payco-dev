@@ -27,7 +27,6 @@ img.clickable {
   font-weight: 400;
   color: rgba(255,255,255,0.85);
   background-color: rgba(255,255,255,0.15);
-
 }
 
 .header .btn:hover {
@@ -43,9 +42,64 @@ img.clickable {
   pointer-events: none;
 }
 
+.accordion-item {
+  background-color: rgba(255,255,255,0.04);
+  color: white;
+  font-size: 1.0vw;
+  border: unset;
+}
+
+
+.accordion-item .btn-group-vertical .btn {
+  background-color: rgba(255,255,255,0.14);
+  border: none;
+padding:3%;
+  margin:0;
+  font-size: 1.0vw;
+}
+
+.accordion-item .btn-group-vertical .btn:hover {
+  background-color: rgba(255,255,255,0.24);
+}
+
+.accordion-header {
+  background-color: rgba(255,255,255,0.04);
+  color: white;
+}
+
+.accordion-header button {
+  font-size: 1.0vw;
+}
+
+.accordion-body {
+  background-color: rgba(255,255,255,0.04);
+  color: white
+}
+
+.accordion-button {
+  background-color: rgba(255,255,255,0.04);
+  color: white
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(255,255,255,0.2);
+  color: white
+}
+
+.nav-tabs .nav-link {
+  background-color: rgba(255,255,255,0.01);
+  border: none;
+  color: rgba(255,255,255,0.5)
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: rgba(255,255,255,0.05);
+}
+
 .nav-tabs .nav-link.active {
-  background-color: rgba(0,0,0,0.01);
-  border: 0.01vw solid rgba(0,0,0,0.05);
+  background-color: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(255,255,255,0.75)
 }
 
 p {
