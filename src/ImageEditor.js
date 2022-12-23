@@ -2,12 +2,9 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import ProgressBar from "react-bootstrap/ProgressBar";
 
-import Image1 from "./jpg/dior/01.webp";
-import Image2 from "./jpg/dior/02.webp";
-import Image3 from "./jpg/dior/04.webp";
-import Image4 from "./jpg/dior/03.jpg";
+import Image2 from "./jpg/wl-1.jpg";
+import Image3 from "./jpg/wl-2.webp";
 
-import Splash1 from "./jpg/dior/splash.jpg";
 
 import {
   faArrowRight,
@@ -77,10 +74,10 @@ const MerchRowStyle = {
   flexDirection: "row",
   zIndex: 15,
   margin: "-2vh 2vw 0 2vw",
-  padding: "8vh 0 20vh 0",
+  padding: "12vh 0 12vh 0",
   gap: "6vw",
   background:
-    "radial-gradient(circle, rgba(22,26,41,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
+  "linear-gradient(318deg, rgba(38,56,73,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
   borderRadius: "1.0vw",
 };
 
@@ -92,7 +89,7 @@ const TitleRowStyle = {
   justifyContent: "center",
   flexDirection: "row",
   margin: "-0.2vh 2vw 0 2vw",
-  padding: "0 0 20vh 0",
+  padding: "0.2vh 0 20vh 0",
   gap: "6vw",
   background:
     "linear-gradient(318deg, rgba(38,56,73,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
@@ -100,8 +97,11 @@ const TitleRowStyle = {
 };
 
 const MerchImageStyle = {
+  overflow: "hidden",
   borderRadius: "1.0vw",
   cursor: "pointer",
+  height: "32vh",
+  width: "30vw"
 };
 
 const VideoContainerStyle = {
@@ -386,35 +386,21 @@ function MainCard() {
               }}
             >
                 <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
                 onClick={() => TogglePlay()}
               >
                 <FontAwesomeIcon
-                  style={SingularHeaderSymbol}
+                  
                   icon={IsPlaying ? faPause : faPlay}
                 />
               </Button>
-              <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-              >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faFilm} />
-                White Lotus: Behind the Scenes
+              <Button                >
+                <FontAwesomeIcon icon={faFilm} />
+                <span>White Lotus: Behind the Scenes</span>
               </Button>
 
-              <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-              >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faUser} />
-                HBO
+              <Button>
+                <FontAwesomeIcon icon={faUser} />
+                <span>HBO</span>
               </Button>
             </div>
 
@@ -430,36 +416,25 @@ function MainCard() {
               }}
             >
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
-                <FontAwesomeIcon style={SingularHeaderSymbol} icon={faHeart} />
+                <FontAwesomeIcon  icon={faHeart} />
               </Button>
 
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
                 <FontAwesomeIcon
-                  style={SingularHeaderSymbol}
+                  
                   icon={faComment}
                 />
               </Button>
 
               <Button
-                size="lg"
-                variant="light"
-                style={{...ButtonStyle, width: "10vw", display: "flex"}}
-                className="border border-0"
+                style={{width: "10vw", display: "flex"}}
               >
                 <div style={{
                     width: "2vw"
                 }}>
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faClock} />
+                <FontAwesomeIcon  icon={faClock} />
                 </div>
 
                 <div
@@ -477,137 +452,42 @@ function MainCard() {
           </Row>
 
 
-          <Row style={MerchRowStyle}>
-            <Col className="col-3">
-              <img src={Image3} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Dior Prestige Set
+          <Row style={MerchRowStyle} className="merch-row">
+
+            <Col className="col-4">
+              <div style={MerchImageStyle}>
+              <img src={Image2} width="100%" />
+              </div>
+              <div style={CenterStyle}>
+              <Button >
+              <FontAwesomeIcon
+                  icon={faCartShopping}
+                />
+              White Lotus Season One
                 <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
                   icon={faArrowRight}
                 />
               </Button>
+              </div>
             </Col>
-            <Col className="col-3">
-              <img src={Image1} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Sauvage Elixir For Men
+            <Col className="col-4">
+            <div style={MerchImageStyle}>
+              <img src={Image3} width="100%" />
+              </div>
+              <div style={CenterStyle}>
+              <Button >
+              <FontAwesomeIcon
+                  icon={faCartShopping}
+                />
+                White Lotus Season Two
                 <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
                   icon={faArrowRight}
                 />
               </Button>
-            </Col>
-            <Col className="col-3">
-              <img src={Image2} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Miss Dior for Women
-                <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
-                  icon={faArrowRight}
-                />
-              </Button>
+              </div>
             </Col>
           </Row>
 
-          <Row style={CenterStyle}>
-            <Col
-              style={{
-                marginLeft: "2vw",
-                marginRight: "2vw",
-                marginTop: "-5vh",
-                marginBottom: "0vh",
-                zIndex: "12",
-                boxShadow: "0 1vh 2.5vw 1vh rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <img
-                src={Splash1}
-                style={{
-                  borderRadius: "1.0vw",
-                }}
-                width="100%"
-              />
-
-              <Row style={CenterStyle}>
-                <div
-                  style={{
-                    width: "21.0vw",
-                    marginTop: "-9vh",
-                  }}
-                >
-                  <Button style={MerchHeaderStyle}>
-                    Christian Dior Paris Set of 10
-                    <FontAwesomeIcon
-                      style={ArrowHeaderSymbol}
-                      icon={faArrowRight}
-                    />
-                  </Button>
-                </div>
-              </Row>
-            </Col>
-          </Row>
-
-          <Row
-            style={{
-              width: "94%",
-              display: "flex",
-
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "row",
-              margin: "-4vh 2vw 0 2vw",
-              padding: "25vh 0 25vh 0",
-              gap: "6.0vh",
-              background:
-                "linear-gradient(318deg, rgba(38,56,73,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
-              borderRadius: "1.0vw",
-            }}
-          >
-            <Row
-              style={{
-                width: "100%",
-                display: "flex",
-
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                gap: "2vw",
-              }}
-            >
-              <Col className="col-3">
-                <img src={Image3} style={MerchImageStyle} width="100%" />
-              </Col>
-              <Col className="col-3">
-                <img src={Image1} style={MerchImageStyle} width="100%" />
-              </Col>
-              <Col className="col-3">
-                <img src={Image2} style={MerchImageStyle} width="100%" />
-              </Col>
-            </Row>
-
-            <Row
-              style={{
-                width: "100%",
-                display: "flex",
-
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-                gap: "2vw",
-              }}
-            >
-              <Col className="col-3">
-                <img src={Image4} style={MerchImageStyle} width="100%" />
-              </Col>
-              <Col className="col-3">
-                <img src={Image3} style={MerchImageStyle} width="100%" />
-              </Col>
-              <Col className="col-3">
-                <img src={Image4} style={MerchImageStyle} width="100%" />
-              </Col>
-            </Row>
-          </Row>
         </Col>
       </Row>
     </Card>

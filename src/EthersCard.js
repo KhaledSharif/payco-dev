@@ -31,6 +31,7 @@ import {
   faClock,
   faExclamationCircle,
   faChevronCircleDown,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useContext } from "react";
@@ -45,15 +46,7 @@ const StripedRowExample = ({ data, txType, txNetwork }) => {
   };
 
   if (data.length === 0) {
-    return (
-      <div>
-        <Spinner
-          animation="border"
-          style={{ fontSize: "1.25vw", color: "orange" }}
-        />
-        <span style={ArrowText}>Transaction in progress, please wait</span>
-      </div>
-    );
+    return;
   }
 
   let tableHead, tableRows;
@@ -120,6 +113,39 @@ const StripedRowExample = ({ data, txType, txNetwork }) => {
         </td>
       </tr>
     ));
+  } else if (txType === "BALANCES") {
+    tableHead = (
+      <tr>
+        <th>Contract Address</th>
+        <th>Token Balance</th>
+      </tr>
+    );
+    tableRows = data.map((x, i) => (
+      <tr key={i}>
+        <td>{x.contractAddress.substring(0, 9)}</td>
+        <td>{x.tokenBalance.toString()}</td>
+      </tr>
+    ));
+  }else if (txType === "NFT-OWN") {
+    tableHead = (
+      <tr>
+        <th>Contract Address</th>
+        <th>NFT Name</th>
+        <th>NFT Token ID</th>
+        <th>NFT Token Name</th>
+
+
+      </tr>
+    );
+    tableRows = data.map((x, i) => (
+      <tr key={i}>
+        <td>{x.contract.address.substring(0, 9)}</td>
+        <td>{x.contract.name}</td>
+        <td>{x.tokenId.substring(0, 4)}</td>
+        <td>{x.title}</td>
+
+      </tr>
+    ));
   } else {
     throw "bad tx type";
   }
@@ -135,13 +161,13 @@ const StripedRowExample = ({ data, txType, txNetwork }) => {
 const SingularHeaderSymbol = {
   margin: "0",
   fontSize: "0.8vw",
-  color: "rgba(0,0,0,0.25)",
+  color: "rgba(255,255,255,0.25)",
 };
 
 const InfoHeaderSymbol = {
   marginRight: "0.5vw",
   fontSize: "0.8vw",
-  color: "rgba(0,0,0,0.5)",
+  color: "rgba(255,255,255,0.5)",
 };
 
 const UserIconStyle = {
@@ -190,7 +216,7 @@ const PaymentStyle = {
 const ArrowText = {
   marginLeft: "0.55vw",
   fontSize: "0.75vw",
-  color: "white"
+  color: "white",
 };
 const MainBulletPoints = {
   marginTop: "2.0vw",
@@ -220,10 +246,20 @@ const CenterStyle = {
   justifyContent: "center",
 };
 
+const CenterStyleCol = {
+  marginTop: "0",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+};
+
 const BulletStyle = { marginBottom: "0.5vw", padding: "0" };
 
 function MainCard() {
-  const { ethAddress, setEthAddress } = useContext(AppContext);
+
+  const [ EthAddressBalance, SetEthAddressBalance ] = useState(-1);
+
 
   const [TransactionState, SetTransactionState] = useState("READY");
 
@@ -242,19 +278,21 @@ function MainCard() {
   const networkNaming = {
     ETH: "Ethereum",
     POLY: "Polygon",
+    ARB: "Arbitrum",
+    OPT: "Optimism",
   };
 
   const networkMapping = {
     ETH: Network.ETH_MAINNET,
     POLY: Network.MATIC_MAINNET,
+    ARB: Network.ARB_MAINNET,
+    OPT: Network.OPT_MAINNET,
   };
 
   const ResetDetails = () => {
     SetTransactionState("READY");
     SetTransactionList([]);
   };
-
-  
 
   const resetTransaction = () => {
     SetTransactionState("PENDING");
@@ -278,24 +316,48 @@ function MainCard() {
       AssetTransfersConfig.fromAddress = EthAddress;
     } else if (TxDirection === "TO") {
       AssetTransfersConfig.toAddress = EthAddress;
-    } else {
-      throw "bad tx dir";
     }
 
     if (TxType === "TX") {
-      AssetTransfersConfig.category = ["external", "internal", "erc20"];
+      AssetTransfersConfig.category = ["external", "erc20"];
     } else if (TxType === "NFT") {
       AssetTransfersConfig.category = ["erc721"];
-    } else {
-      throw "bad tx type";
     }
 
-    alchemy.core.getAssetTransfers(AssetTransfersConfig).then((data) => {
-      console.log({ data, TxType, TxDirection, TxNetwork });
+    if (TxType === "TX" || TxType === "NFT") {
+      alchemy.core.getAssetTransfers(AssetTransfersConfig).then((data) => {
+        SetTransactionList(data);
+        SetTransactionState("COMPLETE");
+      });
+    } else if (TxType === "BALANCES") {
+      alchemy.core.getTokenBalances(EthAddress).then((data) => {
+        const nonZeroBalances = data.tokenBalances
+          .map(({ contractAddress, tokenBalance }) => {
+            return {
+              contractAddress,
+              tokenBalance: ethers.BigNumber.from(tokenBalance),
+            };
+          })
+          .filter((token) => {
+            return !token.tokenBalance.isZero();
+          });
 
-      SetTransactionList(data);
-      SetTransactionState("COMPLETE");
-    });
+        console.log({ nonZeroBalances });
+
+        SetTransactionList(nonZeroBalances);
+        SetTransactionState("COMPLETE");
+      });
+    } else if (TxType === "ETH") {
+      alchemy.core.getBalance(EthAddress).then((data) => {
+        SetEthAddressBalance(ethers.utils.formatEther(data))
+        SetTransactionState("COMPLETE");
+      });
+    }else if (TxType === "NFT-OWN") {
+      alchemy.nft.getNftsForOwner(EthAddress).then((data) => {
+        SetTransactionList(data.ownedNfts)
+        SetTransactionState("COMPLETE");
+      });
+    }
   };
 
   let progressBar = (
@@ -305,6 +367,105 @@ function MainCard() {
     progressBar = <ProgressBar variant="none" animated={true} now={50} />;
   } else if (TransactionState === "COMPLETE") {
     progressBar = <ProgressBar variant="success" animated={false} now={100} />;
+  }
+
+  let TabularResult;
+  if (TransactionState === "READY") {
+    TabularResult = (
+      <div>
+        <Alert variant="warning">
+          <FontAwesomeIcon
+            style={InfoHeaderSymbol}
+            icon={faExclamationCircle}
+          />
+          Click the refresh button above to load transaction history
+        </Alert>
+      </div>
+    );
+  } else if (TransactionState === "COMPLETE") {
+
+    if (TxType === "TX" || TxType === "NFT") {
+      TabularResult = (
+        <div>
+          <Alert variant="success">
+            <FontAwesomeIcon
+              style={InfoHeaderSymbol}
+              icon={faChevronCircleDown}
+            />
+            Shown below: latest 25 {TxType === "NFT" ? "NFT" : "token"}{" "}
+            transactions {TxDirection === "FROM" ? "sent from" : "recieved by"}{" "}
+            the address shown above
+          </Alert>
+          <StripedRowExample
+            data={TransactionList}
+            txType={TxType}
+            txNetwork={TxNetwork}
+          />{" "}
+        </div>
+      );
+    } else if (TxType === "BALANCES") {
+      TabularResult = (
+        <div>
+          <Alert variant="success">
+            <FontAwesomeIcon
+              style={InfoHeaderSymbol}
+              icon={faChevronCircleDown}
+            />
+            Shown below: all ERC-20 tokens owned by the address shown above
+          </Alert>
+          <StripedRowExample
+            data={TransactionList}
+            txType={TxType}
+            txNetwork={TxNetwork}
+          />{" "}
+        </div>
+      );
+    } else if (TxType === "ETH") {
+      TabularResult = (
+        <div>
+          <Alert variant="success">
+            <FontAwesomeIcon
+              style={InfoHeaderSymbol}
+              icon={faCheckCircle}
+            />
+            The Ethereum balance of the address shown above is {EthAddressBalance} ETH
+          </Alert>
+        </div>
+      );
+    } else if (TxType === "NFT-OWN") {
+      TabularResult = (
+        <div>
+          <Alert variant="success">
+            <FontAwesomeIcon
+              style={InfoHeaderSymbol}
+              icon={faChevronCircleDown}
+            />
+            Shown below: all ERC-721 NFTs owned by the address shown above
+          </Alert>
+          <StripedRowExample
+            data={TransactionList}
+            txType={TxType}
+            txNetwork={TxNetwork}
+          />{" "}
+        </div>
+      );
+    } else {
+        throw "bad tx type"
+    }
+
+    
+  } else {
+    TabularResult = (
+      <div>
+        <Alert variant="warning">
+          <Spinner
+            animation="border"
+            style={{ fontSize: "1vw", color: "orange", marginRight: "1vw" }}
+          />
+          Connecting to blockchain, please wait...
+        </Alert>
+      </div>
+    );
   }
 
   let redoButton = (
@@ -325,7 +486,7 @@ function MainCard() {
 
   let dropdownButton = (
     <DropdownButton
-      style={{ width: "unset" }}
+      style={{ width: "unset", padding: 0 }}
       title={`Network: ${networkNaming[TxNetwork]}`}
     >
       <Dropdown.Item
@@ -335,7 +496,7 @@ function MainCard() {
           SetTxNetwork("ETH");
         }}
       >
-        Ethereum
+        {networkNaming["ETH"]}
       </Dropdown.Item>
       <Dropdown.Item
         as="button"
@@ -344,7 +505,25 @@ function MainCard() {
           SetTxNetwork("POLY");
         }}
       >
-        Polygon
+        {networkNaming["POLY"]}
+      </Dropdown.Item>
+      <Dropdown.Item
+        as="button"
+        onClick={() => {
+          ResetDetails();
+          SetTxNetwork("ARB");
+        }}
+      >
+        {networkNaming["ARB"]}
+      </Dropdown.Item>
+      <Dropdown.Item
+        as="button"
+        onClick={() => {
+          ResetDetails();
+          SetTxNetwork("OPT");
+        }}
+      >
+        {networkNaming["OPT"]}
       </Dropdown.Item>
     </DropdownButton>
   );
@@ -370,9 +549,25 @@ function MainCard() {
         }}
         className="border border-0"
       >
+        <Row
+          style={{
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            gap: "1vh",
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "right",
+          }}
+        >
+          {redoButton}
+
+          {dropdownButton}
+        </Row>
+
         <br />
 
-        <Row>
+        <Row style={CenterStyle}>
           <div
             style={{
               width: "100%",
@@ -383,23 +578,38 @@ function MainCard() {
         </Row>
         <br />
 
-        <Row
-          style={{
-            minHeight: "35vh",
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          <Col
-            className="col-4"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Accordion style={{ width: "100%" }} defaultActiveKey="0">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Ethereum Transactions</Accordion.Header>
+        <Row>
+          <Col className="col-3">
+            <Accordion style={{ width: "100%" }} >
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>ETH Balance</Accordion.Header>
+                <Accordion.Body>
+                  <ButtonGroup
+                    size="lg"
+                    style={{
+                      width: "100%",
+                    }}
+                    vertical
+                  >
+                    <Button
+                      onClick={() => {
+                        ResetDetails();
+                        SetEthAddress(
+                          "0x912fD21d7a69678227fE6d08C64222Db41477bA0"
+                        );
+                        SetTxType("ETH");
+                      }}
+                    >
+                      ETH Balance of 0x912fD2
+                    </Button>
+
+                    
+                  </ButtonGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+              
+              <Accordion.Item eventKey="2">
+                <Accordion.Header>ETH & Token Transactions</Accordion.Header>
                 <Accordion.Body>
                   <ButtonGroup
                     size="lg"
@@ -463,20 +673,38 @@ function MainCard() {
                 </Accordion.Body>
               </Accordion.Item>
 
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>ERC-20 Tokens</Accordion.Header>
-                <Accordion.Body></Accordion.Body>
-              </Accordion.Item>
-
               <Accordion.Item eventKey="3">
-                <Accordion.Header>ERC-721 NFTs</Accordion.Header>
+                <Accordion.Header>ERC20 Token Balances</Accordion.Header>
                 <Accordion.Body>
                   <ButtonGroup
                     size="lg"
                     style={{
-                      width: "100%",
-                      padding: "0",
-                      backgroundColor: "rgba(0,0,0,0.05)",
+                      width: "100%"
+                    }}
+                    vertical
+                  >
+                    <Button
+                      onClick={() => {
+                        ResetDetails();
+                        SetEthAddress(
+                          "0x912fD21d7a69678227fE6d08C64222Db41477bA0"
+                        );
+                        SetTxType("BALANCES");
+                      }}
+                    >
+                      All Token Balances for 0x912fD2
+                    </Button>
+                  </ButtonGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="4">
+                <Accordion.Header>ERC721 NFT Transactions</Accordion.Header>
+                <Accordion.Body>
+                  <ButtonGroup
+                    size="lg"
+                    style={{
+                      width: "100%"
                     }}
                     vertical
                   >
@@ -547,42 +775,38 @@ function MainCard() {
                   </ButtonGroup>
                 </Accordion.Body>
               </Accordion.Item>
+
+              <Accordion.Item eventKey="5">
+                <Accordion.Header>ERC721 NFT Ownership</Accordion.Header>
+                <Accordion.Body>
+                  <ButtonGroup
+                    size="lg"
+                    style={{
+                      width: "100%"
+                    }}
+                    vertical
+                  >
+                    <Button
+                      onClick={() => {
+                        ResetDetails();
+                        SetEthAddress(
+                          "0xb00154e628C7880cEdDF01c36888Fa9e6FD3ecb9"
+                        );
+                        SetTxType("NFT-OWN");
+                      }}
+                    >
+                      NFTs owned by 0xb00154
+                    </Button>
+
+                    
+                  </ButtonGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+
             </Accordion>
           </Col>
 
-          <Col className="col-8" style={CenterStyle}>
-            <Row
-              style={{
-                display: "flex",
-                gap: "1vh",
-                flexDirection: "row",
-                width: "100%",
-                justifyContent: "right",
-              }}
-            >
-              {redoButton}
-
-              {dropdownButton}
-
-              {/* {ethAddress ? (
-                <Button
-                  style={{ width: "15vw" }}
-                  onClick={() => setEthAddress(null)}
-                >
-                  Logged in as {ethAddress.substring(0, 6)}
-                </Button>
-              ) : (
-                <Button
-                  style={{ width: "15vw" }}
-                  onClick={() => LoginWithMetamask()}
-                >
-                  Login with Metamask
-                </Button>
-              )} */}
-            </Row>
-
-            <br />
-
+          <Col style={CenterStyle}>
             <Row
               style={{
                 display: "flex",
@@ -592,14 +816,13 @@ function MainCard() {
                 justifyContent: "center",
               }}
             >
-              <ListGroup style={{ width: "100%" }} as="ol">
+              <ListGroup style={{ width: "100%", padding: 0 }} as="ol">
                 <ListGroup.Item
                   as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
-                    <div className="fw-bold">
-                      {TxDirection === "FROM" ? "Sending" : "Receiving"} Address
+                    <div className="fw-bold">Ethereum Address
                     </div>
 
                     {EthAddress}
@@ -642,7 +865,7 @@ function MainCard() {
               <div
                 style={{
                   width: "100%",
-                  backgroundColor: "rgba(0,0,20,0.5)",
+                  backgroundColor: "rgba(0,0,20,0.25)",
                   paddingTop: "2%",
                   paddingBottom: "2%",
                   paddingLeft: "1.0vw",
@@ -650,37 +873,7 @@ function MainCard() {
                   borderRadius: "0.25vw",
                 }}
               >
-                {TransactionState === "READY" ? (
-                  <div>
-                    <Alert variant="warning">
-                      <FontAwesomeIcon
-                        style={InfoHeaderSymbol}
-                        icon={faExclamationCircle}
-                      />
-                      Click the refresh button above to load transaction history
-                    </Alert>
-                  </div>
-                ) : (
-                  <div>
-                    <Alert variant="success">
-                      <FontAwesomeIcon
-                        style={InfoHeaderSymbol}
-                        icon={faChevronCircleDown}
-                      />
-                      Shown below: latest 25{" "}
-                      {TxType === "NFT" ? "NFT" : "token"} transactions{" "}
-                      {TxDirection === "FROM" ? "sent from" : "recieved by"} the
-                      address shown above
-                    </Alert>
-                    <StripedRowExample
-                      data={TransactionList}
-                      txType={TxType}
-                      txNetwork={TxNetwork}
-                    />{" "}
-                  </div>
-                )}
-
-                <br />
+                {TabularResult}
               </div>
             </Row>
           </Col>

@@ -16,7 +16,6 @@ body::-webkit-scrollbar {
 
 }
 
-
 .row .table-dark td {
   background-color: rgba(255,255,255,0.1);
   color: rgba(255, 255, 255, 0.85);
@@ -35,11 +34,39 @@ body::-webkit-scrollbar {
   --bs-table-accent-bg: unset;
 }
 
-.row > button {
+.row button {
   background-color: rgba(255,255,255,0.1);
+  padding-left: 0.65vw;
+  padding-right: 0.65vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   border: none;
   color: rgba(255, 255, 255, 0.85);
-  font-size: 1.0vw;
+  font-size: 0.75vw;
+}
+
+.row button > span {
+  margin-left: 0.25vw;
+
+}
+
+.row button > svg {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.row button:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.row button:focus {
+  background-color: rgba(255,255,255,0.25);
+  box-shadow: unset;
+}
+
+.badge-header .badge {
+  font-size: 0.85vw;
+  color: rgba(0,0,20, 0.85);
+  background-color: rgba(255, 255, 255, 0.75) !important
 }
 
 .list-group > li {
@@ -51,9 +78,15 @@ body::-webkit-scrollbar {
 .row > .dropdown > button {
   background-color: rgba(255,255,255,0.1);
   border: none;
-  font-size: 1.0vw;
+  font-size: 0.75vw;
+  padding-left: 1.0vw;
+  padding-right: 1.0vw;
   color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
 
+.row > .dropdown > button:hover {
+  background-color: rgba(255,255,255,0.2);
 }
 
 .row .alert-success {
@@ -112,7 +145,26 @@ img.clickable {
   border: none;
 padding:3%;
   margin:0;
+  font-size: 0.75vw;
+}
+
+.merch-row button {
+  background-color: rgba(0,0,20, 0.75);
+  color:rgba(255, 255, 255, 0.95);
+  border: none;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: -7vh;
   font-size: 1.0vw;
+}
+
+.merch-row button:hover {
+  background-color: rgba(0,0,20, 0.85);
+}
+
+.merch-row button > svg {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
 }
 
 .accordion-item .btn-group-vertical .btn:hover {
@@ -125,7 +177,11 @@ padding:3%;
 }
 
 .accordion-header button {
-  font-size: 1.0vw;
+  font-size: 0.75vw;
+}
+
+.accordion-button::after {
+  background-image: unset  !important
 }
 
 .accordion-body {
@@ -136,6 +192,10 @@ padding:3%;
 .accordion-button {
   background-color: rgba(255,255,255,0.04);
   color: white
+}
+
+.accordion-button:hover {
+  background-color: rgba(255,255,255,0.09)
 }
 
 .accordion-button:not(.collapsed) {

@@ -61,6 +61,7 @@ const ArrowHeaderSymbol = {
   color: "rgba(0,0,0,0.45)",
 };
 
+
 const TitleRowStyle = {
   zIndex: 10,
   width: "90%",
@@ -68,8 +69,8 @@ const TitleRowStyle = {
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "row",
-  margin: "-9.25vh 2vw 0 2vw",
-  padding: "0 0 20vh 0",
+  margin: "-9vh 2vw 0 2vw",
+  padding: "0.2vh 0 20vh 0",
   gap: "6vw",
   background:
     "linear-gradient(318deg, rgba(38,56,73,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
@@ -366,23 +367,15 @@ function MainCard() {
               }}
             >
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faCube} />
-                Terrarium Bots
+                <FontAwesomeIcon  icon={faCube} />
+                <span>Terrarium Bots</span>
               </Button>
 
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faUser} />
-                vitalik.eth
+                <FontAwesomeIcon  icon={faUser} />
+                <span>vitalik.eth</span>
               </Button>
             </div>
 
@@ -398,37 +391,23 @@ function MainCard() {
               }}
             >
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
-                <FontAwesomeIcon style={SingularHeaderSymbol} icon={faHeart} />
+                <FontAwesomeIcon  icon={faHeart} />
               </Button>
 
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
                 <FontAwesomeIcon
-                  style={SingularHeaderSymbol}
                   icon={faInfoCircle}
                 />
               </Button>
 
               <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
               >
                 <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
                   icon={faCartShopping}
                 />
-                4.2 ETH
+                <span>4.2 ETH</span>
               </Button>
             </div>
           </Row>

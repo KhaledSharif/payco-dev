@@ -38,7 +38,7 @@ const SingularHeaderSymbol = {
 const ButtonStyle = {
   fontSize: "0.9vw",
   borderRadius: "1.0vw",
-  padding: "0 1vw 0 1vw",
+  padding: "0 0.75vw 0 0.75vw",
   boxShadow:
     "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)",
 };
@@ -107,7 +107,10 @@ function Header() {
               style={{
                 fontSize: "0.9vw",
                 borderRadius: "1.0vw",
-                // padding: "0.4vw 0.8vw 0.4vw 0.8vw",
+                paddingTop: "1%",
+                paddingBottom: "1%",
+                paddingLeft: "1.35%",
+                paddingRight: "2%",
                 boxShadow:
                   "0.1vw 0.1vw 0.2vw rgba(0,0,0,0.05), -0.1vw -0.1vw 0.2vw rgba(255,255,255,0.01)",
               }}
@@ -123,7 +126,7 @@ function Header() {
                   src={SmallLogo}
                   style={{
                     height: "40px",
-                    marginRight: "0.55vw",
+                    marginRight: "0.45vw",
                   }}
                 />
                 <p
@@ -226,16 +229,20 @@ function Header() {
 
             {ethAddress ? (
               <Button
+              onClick={()=> setLayout("PROFILE-PAGE")}
                 size="lg"
                 variant="light"
-                style={ButtonStyle}
+                style={{...ButtonStyle, paddingLeft: "20px"}}
                 className="border border-0"
               >
                 <FontAwesomeIcon
-                  style={{ ...ArrowHeaderSymbol, marginRight: "0.35vw" }}
+                  style={{ ...ArrowHeaderSymbol, marginRight: "0.35vw", height: "25px", paddingTop: "8px" }}
                   icon={faUserCircle}
                 />
-                {ethAddress.substring(0, 6)}
+                <span
+                
+
+                >{ethAddress.substring(0, 6)}</span>
               </Button>
             ) : (
               <Button

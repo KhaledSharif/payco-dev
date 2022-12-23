@@ -44,7 +44,7 @@ const SingularHeaderSymbol = {
   color: "rgba(0,0,0,0.45)",
 };
 const ButtonStyle = {
-    minWidth: "2.5vw",
+  minWidth: "2.5vw",
   paddingLeft: "1vw",
   paddingRight: "1vw",
 
@@ -91,13 +91,12 @@ const TitleRowStyle = {
   justifyContent: "center",
   flexDirection: "row",
   margin: "-0.2vh 2vw 0 2vw",
-  padding: "0 0 20vh 0",
+  padding: "0.2vh 0 20vh 0",
   gap: "6vw",
   background:
     "linear-gradient(318deg, rgba(38,56,73,1) 0%, rgba(38,56,73,1) 10%, rgba(10,10,10,1) 100%)",
   borderRadius: "1.0vw",
 };
-
 const MerchImageStyle = {
   borderRadius: "1.0vw",
   cursor: "pointer",
@@ -384,36 +383,17 @@ function MainCard() {
                 padding: 0,
               }}
             >
-                <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-                onClick={() => TogglePlay()}
-              >
-                <FontAwesomeIcon
-                  style={SingularHeaderSymbol}
-                  icon={IsPlaying ? faPause : faPlay}
-                />
+              <Button onClick={() => TogglePlay()}>
+                <FontAwesomeIcon icon={IsPlaying ? faPause : faPlay} />
               </Button>
-              <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-              >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faFilm} />
-                Christian Dior Collection
+              <Button>
+                <FontAwesomeIcon icon={faFilm} />
+                <span>Christian Dior Collection</span>
               </Button>
 
-              <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-              >
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faUser} />
-                dior.eth
+              <Button>
+                <FontAwesomeIcon icon={faUser} />
+                <span>dior.eth</span>
               </Button>
             </div>
 
@@ -428,84 +408,72 @@ function MainCard() {
                 padding: 0,
               }}
             >
-              <Button
-                size="lg"
-                variant="light"
-                style={ButtonStyle}
-                className="border border-0"
-              >
-                <FontAwesomeIcon style={SingularHeaderSymbol} icon={faHeart} />
+              <Button>
+                <FontAwesomeIcon icon={faHeart} />
               </Button>
 
-
-              <Button
-                size="lg"
-                variant="light"
-                style={{...ButtonStyle, width: "8vw", display: "flex"}}
-                className="border border-0"
-              >
-                <div style={{
-                    width: "2vw"
-                }}>
-                <FontAwesomeIcon style={ArrowHeaderSymbol} icon={faClock} />
+              <Button style={{ width: "8vw", display: "flex" }}>
+                <div
+                  style={{
+                    width: "2vw",
+                  }}
+                >
+                  <FontAwesomeIcon icon={faClock} />
                 </div>
 
                 <div
-                
-                style={{
-                    width: "4vw"
-                }}
-                
+                  style={{
+                    width: "4vw",
+                  }}
                 >
-                {parseInt(Math.round(CurrentTime)).toString().padStart(2, "0")}s
-                / {parseInt(Math.round(TotalTime)).toString().padStart(2, "0")}s
+                  {parseInt(Math.round(CurrentTime))
+                    .toString()
+                    .padStart(2, "0")}
+                  s /{" "}
+                  {parseInt(Math.round(TotalTime)).toString().padStart(2, "0")}s
                 </div>
               </Button>
             </div>
           </Row>
 
-
-          <Row style={MerchRowStyle}>
+          <Row style={MerchRowStyle} className="merch-row">
             <Col className="col-3">
               <img src={Image3} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Dior Prestige Set
-                <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
-                  icon={faArrowRight}
-                />
-              </Button>
+              <div style={CenterStyle}>
+                <Button>
+                  Dior Prestige Set
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </Button>
+              </div>
             </Col>
             <Col className="col-3">
               <img src={Image1} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Sauvage Elixir For Men
-                <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
-                  icon={faArrowRight}
-                />
-              </Button>
+              <div style={CenterStyle}>
+                <Button>
+                  Sauvage Elixir For Men
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </Button>
+              </div>
             </Col>
             <Col className="col-3">
               <img src={Image2} style={MerchImageStyle} width="100%" />
-              <Button style={ArrowHeaderStyle}>
-                Miss Dior for Women
-                <FontAwesomeIcon
-                  style={ArrowHeaderSymbol}
-                  icon={faArrowRight}
-                />
-              </Button>
+              <div style={CenterStyle}>
+                <Button>
+                  Miss Dior for Women
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </Button>
+              </div>
             </Col>
           </Row>
 
-          <Row style={CenterStyle}>
+          <Row style={CenterStyle} className="merch-row">
             <Col
               style={{
                 marginLeft: "2vw",
                 marginRight: "2vw",
                 marginTop: "-5vh",
                 marginBottom: "0vh",
-                zIndex: "12",
+                zIndex: "20",
                 boxShadow: "0 1vh 2.5vw 1vh rgba(0, 0, 0, 0.25)",
               }}
             >
@@ -521,15 +489,12 @@ function MainCard() {
                 <div
                   style={{
                     width: "21.0vw",
-                    marginTop: "-9vh",
+                    marginTop: "-2vh",
                   }}
                 >
-                  <Button style={MerchHeaderStyle}>
+                  <Button>
                     Christian Dior Paris Set of 10
-                    <FontAwesomeIcon
-                      style={ArrowHeaderSymbol}
-                      icon={faArrowRight}
-                    />
+                    <FontAwesomeIcon icon={faArrowRight} />
                   </Button>
                 </div>
               </Row>
