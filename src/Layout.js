@@ -10,7 +10,9 @@ import { Container, Col, Row } from "react-bootstrap";
 import IndividualInfoCard from "./IndividualInfoCard";
 import EtherscanCard from "./EtherscanCard";
 import EthersCard from "./EthersCard";
+import ProfilePage from "./ProfilePage";
 import ImageEditor from "./ImageEditor";
+
 import VideoEditor from "./VideoEditor";
 import POS from "./POS";
 
@@ -57,6 +59,9 @@ function Layout() {
 
     } else if (layout === "IMAGE-EDITOR") {
         layoutInternals = <ImageEditor />
+
+    }  else if (layout === "PROFILE-PAGE") {
+        layoutInternals = <ProfilePage />
 
     } else if (layout === "POS") {
         layoutInternals =
